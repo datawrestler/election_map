@@ -6,6 +6,7 @@
     <title>Presidential Election Visualization</title>
     <script src="//d3js.org/d3.v3.min.js"></script>
     <script src="//d3js.org/topojson.v1.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="//d3js.org/queue.v1.min.js"></script>
     <style>
 
@@ -27,11 +28,11 @@
         }
 
         .rectclicked {
-            fill: none;
+            fill: steelblue;
             pointer-events: all;
             stroke: black;
             stroke-width: .5px;
-            opacity: 0.8;
+            opacity: 0.9;
 
         }
 
@@ -56,9 +57,16 @@
             stroke: black;
             stroke-width: .5px;
         }
+
+        .legend {
+            font-size: 4px;
+        }
+
+        .legendtitle {
+            font-size: 8px;
+        }
     
         path {
-                fill: #ccc;
                 stroke: #fff;
                 stroke-width: .5px;
             }
@@ -67,20 +75,31 @@
                 fill: orange;
             }
 
-        div.tooltip {
-            color: #222;
-            background-color: #fff;
-            padding: .5em;
-            text-shadow: #f5f5f5 0 1px 0;
-            border-radius: 2px;
-            opacity: 0.9;
-            position: absolute;
+        .slice text {
+            font-size: 16pt;
+            font-family: Arial;
         }
-    
+
+        #tooltip {                                                        /* NEW */
+            background: #eee;                                               /* NEW */
+            box-shadow: 0 0 5px #999999;                                    /* NEW */
+            color: #333;                                                    /* NEW */
+            display: none;                                                  /* NEW */
+            font-size: 12px;                                                /* NEW */
+            left: 130px;                                                    /* NEW */
+            padding: 10px;                                                  /* NEW */
+            position: absolute;                                             /* NEW */
+            text-align: center;                                             /* NEW */
+            top: 95px;                                                      /* NEW */
+            width: 80px;                                                    /* NEW */
+            z-index: 10;                                                    /* NEW */
+        }
+
     </style>
 </head>
 
 <body>
+
 
     <script type='text/javascript'>
 
@@ -98,9 +117,7 @@
         scale0 = (width - 1) / 2 / Math.PI,
         centered;
 
-    // set tooltip
-    var tooltip = d3.select('body').append('div')
-            .attr("class", 'hidden tooltip');
+
 
     var projection = d3.geo.albersUsa()
         .scale(1000)
@@ -164,6 +181,9 @@
     function clicked(d) {
         g.selectAll('rect.rectclicked').remove();
         g.selectAll('svg.piechart').remove();
+        g.selectAll('rect.legend').remove();
+        g.selectAll('text.legend').remove();
+        g.selectAll("text.legendtitle").remove();
 
         var x, y, k;
 
@@ -174,7 +194,7 @@
         //capture the values for the county data
         try {
             console.log(testdata[0]['key']);
-            drawDonut(testdata[0]['percent_obama'], testdata[0]['percent_romney'], path.centroid(d));
+            drawDonut(testdata[0]['percent_obama'], testdata[0]['percent_romney'], path.centroid(d), testdata[0]['county_name']);
         }
 
         catch(err){
@@ -199,6 +219,9 @@
             centered = null;
             g.selectAll('rect.rectclicked').remove();
             g.selectAll('svg.piechart').remove();
+            g.selectAll('rect.legend').remove();
+            g.selectAll('text.legend').remove();
+            g.selectAll("text.legendtitle").remove();
     }
 
     g.selectAll("path")
@@ -226,21 +249,41 @@ d3.select(self.frameElement).style("height", height + "px");
 
     // function drawDonut takes in two values, election result values, and draws a pie chart for
     // that particular county
-    function drawDonut(value1, value2, centroid) {
+    function drawDonut(democratvalue, republicanvalue, centroid, countyname) {
 
+        var rectWidth = 80,
+                rectHeight = 80;
 
+        g.append('rect')
+                .attr("class", 'rectclicked')
+                .attr("width", rectWidth)
+                .attr("height", rectHeight)
+                .attr("x", centroid[0]+30)
+                .attr("y", centroid[1]-50);
+
+        // define tooltip information
+        var tooltip = d3.select('#piechart')
+                .append('div')
+                .attr("class", 'toolTip');
+
+        tooltip.append('div')
+                .attr('class', 'label');
+
+        tooltip.append('div')
+                .attr('class', 'count');
+
+        tooltip.append('div')
+                .attr('class', 'percent');
 
         var tmpdata = {
-            electionresults: [value1, value2]
+            electionresults: [democratvalue, republicanvalue]
         };
 
         var width = 100,
                 height = 60,
                 radius = Math.min(width, height) / 2;
 
-        var color = d3.scale.category20();
-
-        var partyColor = ['#F86B6B', '#0000FF']; //republican color, democrat color
+        var partyColor = ['#0000FF', '#fc0606']; //republican color, democrat color
 
         var pie = d3.layout.pie()
                 .sort(null);
@@ -253,8 +296,8 @@ d3.select(self.frameElement).style("height", height + "px");
                 .attr("width", width)
                 .attr("height", height)
                 .attr("class", 'piechart')
-                .attr('x', centroid[0]+30)
-                .attr('y', centroid[1]-50)
+                .attr('x', centroid[0]+20)
+                .attr('y', centroid[1]-40)
                 .append("g")
                 .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
@@ -262,18 +305,66 @@ d3.select(self.frameElement).style("height", height + "px");
                 .data(pie(tmpdata.electionresults))
                 .enter().append("path")
                 .attr("class", "piechart")
-                //.attr("fill", function (d, i) {
-                //    return partyColor[i];
-                .attr("fill", '#0000FF')
-                //})
-                .attr("d", arc);
+                .attr("fill", function (d, i) {
+                    return partyColor[i]})
+                .attr("d", arc)
+                .on('mouseover', function(d){
+                    $("#tooltip")
+                            .css('left', (d3.event.pageX) + 'px')
+                            .css('top', (d3.event.pageY - 90) + 'px')
+                            .css('position', 'fixed')
+                            .html(d.value + '%')
+                            .show();
+                })
+                .on('mouseout', function(d){
+                    $("#tooltip").html('').hide();
+                });
 
-        //g.append('rect')
-        //        .attr("class", 'rectclicked')
-        //        .attr("width", 60)
-        //        .attr("height", 60)
-        //        .attr("x", centroid[0]+50)
-        //        .attr("y", centroid[1]-50);
+        // create legend data for donut chart democratic party
+        g.append('rect')
+                .attr('class', 'legend')
+                .attr('width', 5)
+                .attr('height', 5)
+                .attr('x', centroid[0]+55)
+                .attr('y', centroid[1]-20)
+                .attr('stroke', 'black')
+                .attr('fill', partyColor[0]);
+
+        g.append('text')
+                .attr('class', 'legend')
+                .attr('x', centroid[0] + 61)
+                .attr('y', centroid[1]-16)
+                .text('Obama');
+
+        // create legend data for donut chart republican party
+        g.append('rect')
+                .attr('class', 'legend')
+                .attr('width', 5)
+                .attr('height', 5)
+                .attr('x', centroid[0] + 55)
+                .attr('y', centroid[1]-8)
+                .attr('stroke', 'black')
+                .attr('fill', partyColor[1])
+
+        g.append('text')
+                .attr('class', 'legend')
+                .attr('x', centroid[0] + 61)
+                .attr('y', centroid[1]-4)
+                .text('Romney');
+
+        g.append('text')
+                .attr('class', 'legendtitle')
+                .attr('x', centroid[0]+(50-((countyname.length+7)/2)))
+                .attr('y', centroid[1]-42)
+                .text(countyname+" County");
+
+        console.log(countyname.length);
+
+
+
+
+
+
     }
 
 
@@ -282,6 +373,10 @@ d3.select(self.frameElement).style("height", height + "px");
 
 
 </script>
+
+    <div id="tooltip" class="hidden">
+        <p><span id="election-label"></span></p>
+    </div>
 
 <div id="chart"></div>
     
