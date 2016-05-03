@@ -19,6 +19,29 @@
         .income7 { fill:rgb(33,113,181); }
         .income8 { fill:rgb(8,81,156); }
         .income9 { fill:rgb(8,48,107); }
+
+
+        .election1 { fill:rgb(8,48,107); }
+        .election2 { fill:rgb(8,81,156); }
+        .election3 { fill:rgb(33,113,181); }
+        .election4 { fill:rgb(66,146,198); }
+        .election5 { fill:rgb(107,174,214); }
+        .election6 { fill:rgb(158,202,225); }
+        .election7 { fill:rgb(198,219,239); }
+        .election8 { fill:rgb(222,235,247); }
+        .election9 { fill:rgb(222,235,247); }
+        .election10 { fill:rgb(255,222,222); }
+        .election11 { fill:rgb(255,222,222); }
+        .election12 { fill:rgb(255,198,198); }
+        .election13 { fill:rgb(255,171,171); }
+        .election14 { fill:rgb(255,137,137); }
+        .election15 { fill:rgb(255,102,102); }
+        .election16 { fill:rgb(255,73,73); }
+        .election17 { fill:rgb(255,46,46); }
+        .election18 { fill:rgb(255,23,23); }
+        .election19 { fill:rgb(255,0,0); }
+
+
     
         .background {
             fill: none;
@@ -111,9 +134,12 @@
     
     queue()
         .defer(d3.json, "Data/us-10m.json")
-        .defer(d3.csv, 'Data/IncomeData/medianincome_2012.csv', function(d) {incomeRating.set(d.county_id, +d.median_income);})
+        //.defer(d3.csv, 'Data/IncomeData/medianincome_2012.csv', function(d) {incomeRating.set(d.county_id, +d.median_income);})
+            .defer(d3.csv, 'Data/ElectionData/2012_full_election_county2.csv', function(d) {incomeRating.set(d.county_id, d.percent_romney);})
         .await(drawmap);
-    
+
+
+
 
     var width = 960,
         height = 500,
@@ -131,6 +157,14 @@
     var scaleincome = d3.scale.quantize()
         .domain([0, 100000])
         .range(d3.range(9).map(function(i) {return "income" + i;}));
+
+    var scaleDemocrat = d3.scale.quantize()
+            .domain([0,100])
+            .range(d3.range(9).map(function(i) {return "democrat" + i;}));
+
+    var scaleElection = d3.scale.quantize()
+            .domain([0,101])
+            .range(d3.range(19).map(function(i){ return "election" + i;}));
     
     var zoom = d3.behavior.zoom()
         .translate([width / 2, height / 2])
@@ -160,7 +194,7 @@
         g.selectAll("path")
             .data(topojson.feature(mapdata,    mapdata.objects.counties).features)
             .enter().append("path")
-                .attr("class", function(d) { return scaleincome(incomeRating.get(d.id)); })
+                .attr("class", function(d) {return scaleElection(incomeRating.get(d.id));})
                 .attr("d", path)
                 .on('click', clicked);
 
@@ -182,11 +216,8 @@
 
     // hanlding when user clicks on a county on the map, draws pie chart as well for county data
     function clicked(d) {
-        g.selectAll('rect.rectclicked').remove();
-        g.selectAll('svg.piechart').remove();
-        g.selectAll('rect.legend').remove();
-        g.selectAll('text.legend').remove();
-        g.selectAll("text.legendtitle").remove();
+        //remove temporary dom elements from dom
+        g.selectAll(['rect.rectclicked', 'svg.piechart','rect.legend', 'text.legend', 'text.legendtitle']).remove();
 
         var x, y, k;
 
@@ -220,11 +251,9 @@
             y = height / 2;
             k = 1;
             centered = null;
-            g.selectAll('rect.rectclicked').remove();
-            g.selectAll('svg.piechart').remove();
-            g.selectAll('rect.legend').remove();
-            g.selectAll('text.legend').remove();
-            g.selectAll("text.legendtitle").remove();
+
+            //remove temporary dom elements for county visualization
+            g.selectAll(['rect.rectclicked', 'svg.piechart','rect.legend', 'text.legend', 'text.legendtitle']).remove();
     }
 
     g.selectAll("path")
@@ -241,7 +270,7 @@ d3.select(self.frameElement).style("height", height + "px");
 
     // Read in the election data per county
     var electiondata = null;
-    d3.csv("Data/ElectionData/2012_election_county.csv")
+    d3.csv("Data/ElectionData/2012_full_election_county2.csv")
             .row(function(d) { return {key: d.county_id, obama_vote: d.obama_vote, romney_vote: d.romney_vote,
                         state: d.state, county_name: d.county_name, percent_obama: d.percent_obama, percent_romney: d.percent_romney};})
             .get(function(error, rows){
@@ -262,20 +291,6 @@ d3.select(self.frameElement).style("height", height + "px");
                 .attr("height", rectHeight)
                 .attr("x", centroid[0]+30)
                 .attr("y", centroid[1]-50);
-
-        // define tooltip information
-        var tooltip = d3.select('#piechart')
-                .append('div')
-                .attr("class", 'toolTip');
-
-        tooltip.append('div')
-                .attr('class', 'label');
-
-        tooltip.append('div')
-                .attr('class', 'count');
-
-        tooltip.append('div')
-                .attr('class', 'percent');
 
         var tmpdata = {
             electionresults: [democratvalue, republicanvalue]
@@ -346,7 +361,7 @@ d3.select(self.frameElement).style("height", height + "px");
                 .attr('x', centroid[0] + 55)
                 .attr('y', centroid[1]-8)
                 .attr('stroke', 'black')
-                .attr('fill', partyColor[1])
+                .attr('fill', partyColor[1]);
 
         g.append('text')
                 .attr('class', 'legend')
