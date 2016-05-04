@@ -17,7 +17,15 @@
         }
 
         .chart rect {
+            stroke: white;
             fill: steelblue;
+        }
+
+        .bartext {
+            font-size: 12px;
+            color: red;
+            font-family: Courier;
+
         }
     </style>
 </head>
@@ -43,95 +51,105 @@
                 incomedata = rows;
             });
 
-    var labels = ["total","under1","under10k","under25k","under50k","under75k","under100k","under200k","over200k"]
+    var labels = ["under $1","under $10k","under $25k","under $50k","under $75k","under $100k","under $200k","over $200k"]
 
-    var testdata = [23700, 250, 3730, 6460, 5640, 3220, 2020, 2030, 350];
-
-    /*
-    svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis);
-
-    svg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis)
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
-            .style("text-anchor", "end")
-            .text("Frequency");
-
-    svg.selectAll(".bar")
-            .data(testdata)
-            .enter().append("rect")
-            .attr("class", "bar")
-            .attr("x", function(d,i) {return i + 20})
-            .attr("width", 20)
-            .attr("y", testdata[1])
-            .attr("height", function(d) { return d/100})
-            .transition(100);
+    var testdata = [250, 3730, 6460, 5640, 3220, 2020, 2030, 350];
 
 
-
-
-
-
-
-    var totalWidth = 500;
-    var totalHeight = 200;
-    var barWidth =  totalWidth/testdata.length;
-
-    var x = d3.scale.linear()
-            .domain([0, d3.max(testdata)])
-            .range(['0px', '420px']);
-
-    var y = d3.scale.ordinal()
-            .domain(d3.range(testdata.length))
-            .rangeBands([0, totalHeight]);
-
-    var chart = d3.select(".chart")
-            .attr('width', totalWidth)
-            .attr('height', totalHeight);
-
-    var bar = chart.selectAll("g")
-            .data(testdata)
-            .enter().append('g')
-            .attr('transform', function(d, i) { return 'translate(' + i * barWidth + ',0)';});
-
-    chart.selectAll("rect")
-            .data(testdata)
-            .enter().append('rect')
-            .attr('x', 0)
-            .attr('y', y)
-            .attr('width', x)
-            .attr('height', y.rangeBand());
-
-     */
     var width = 500;
     var totalHeight = 200;
 
-    var chart = d3.select('body')
-            .append('div')
-            .attr('class', 'chart');
+    var height = 20 * testdata.length;
+
+
+
+    var svg = d3.select('body')
+            .append('svg:svg')
+            .attr('class', 'chart')
+            .attr('width', 420)
+            .attr('height', 40 * testdata.length);
 
     var x = d3.scale.linear()
             .domain([0, d3.max(testdata)])
             .range(['0px', '420px']);
 
-    var y = d3.scale.ordinal()
-            .domain(d3.range(testdata.length))
-            .rangeBands([0, totalHeight]);
 
-    chart.selectAll('div')
+
+    svg.append('g')
+            .attr('class', 'x axis')
+            .attr('transform', 'translate(0,' + height + ')')
+            .data(labels)
+            .selectAll('text')
+            .style('text-anchor', 'end')
+            .attr('dx', '-.8em')
+            .attr('dy', '-.55em')
+            .attr('transform', 'rotate(-90)');
+
+    //var y = d3.scale.ordinal()
+    //        .domain(d3.range(testdata.length))
+    //        .rangeBands([0, totalHeight]);
+
+    var y = d3.scale.linear().range([height, 0]);
+
+    y.domain([0, d3.max(testdata)]);
+
+
+
+    svg.selectAll('rect')
             .data(testdata)
-            .enter().append('div')
-            .style("width", x)
-            .attr("height", y.rangeBands)
+            .enter().append('svg:rect')
+            .attr('x', function(d, i) {return i * 20;})
+            .attr('y', function(d, i) { return y(d);})
+            .attr("width", 20)
+            .attr('height', function(d, i) { return (height-y(d));})
+            .text(String);
+            //.attr("transform", 'rotate(-90)');
 
-            .text(String)
-            .attr("transform", 'rotate(-90)');
+    var xAxis = d3.svg.axis()
+            .scale(labels);
+    /*
+    svg.selectAll('text')
+            .data(labels)
+            .enter().append('text')
+            //.attr('class', 'bartext')
+            .attr('fill', 'red')
+            .attr("transform", "translate(0" + height + ")")
+            .style('text-anchor', 'end')
+            .attr('dx', '2em')
+            .attr('dy', '0em')
+            .attr('transform', function(d) { return 'rotate(-90)'})
+            //.call(xAxis)
+
+            //.attr('x', function(d, i) {return i * 9;})
+            .text(function(d){ return d;})
+
+            //.style('text-anchor', 'start')
+            ;
+
+
+    svg.append('g')
+            .data(labels)
+            .enter().append('text')
+            .selectAll("text")
+            .attr('class', 'bartext')
+            .attr('fill', 'red')
+            .attr("transform", "translate(0" + height + ")")
+            .call(xAxis)
+
+            .attr('x', function(d, i) {return i * 9;})
+            .attr('y', 200)
+            .text(function(d){ return d;})
+            .attr("dx", '.35em')
+            .attr("transform", 'rotate(-90)')
+    //.style('text-anchor', 'start')
+ */
+
+    svg.selectAll(".text")
+            .data(labels)
+            .enter().append('text')
+            .attr("transform", function(d,i) { return 'translate(' + (3+(i*20)) + ", 160)" + 'rotate(90)'})
+            .text(function(d) { return d;});
+
 
 //console.log(incomedata.filter(function(v) { return v.key == 1002}));
 //drawBarChart(1002);
