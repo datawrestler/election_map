@@ -15,6 +15,10 @@
             margin: 1px;
             color: white;
         }
+
+        .chart rect {
+            fill: steelblue;
+        }
     </style>
 </head>
 <body>
@@ -23,30 +27,6 @@
 
     //function drawDonut(value1, value2) {
 
-    var margin = {top: 20, right: 20, bottom: 30, left: 40},
-           width = 960 - margin.left - margin.right,
-            height = 500-margin.top - margin.bottom;
-
-    var x = d3.scale.ordinal()
-            .rangeRoundBands([0, width], .1);
-
-    var y = d3.scale.linear()
-            .range([height, 0]);
-
-    var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom");
-
-    var yAxis = d3.svg.axis()
-            .scale(y)
-            .orient("left")
-            .ticks(10, "%");
-
-    var svg = d3.select("body").append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     function drawBarChart(countyid) {
         var tmpdata = incomedata.filter(function(v){return v.key == countyid});
@@ -59,7 +39,7 @@
                 under1: d.under1, under10k: d.under10k, under25k: d.under25k, under50k: d.under50k,
             under75k: d.under75k, under100k: d.under100k, under200k: d.under200k, over200k: d.over200k};})
             .get(function(error, rows){
-                console.log(rows);
+                //console.log(rows);
                 incomedata = rows;
             });
 
@@ -95,6 +75,43 @@
 
 
 
+
+
+
+
+    var totalWidth = 500;
+    var totalHeight = 200;
+    var barWidth =  totalWidth/testdata.length;
+
+    var x = d3.scale.linear()
+            .domain([0, d3.max(testdata)])
+            .range(['0px', '420px']);
+
+    var y = d3.scale.ordinal()
+            .domain(d3.range(testdata.length))
+            .rangeBands([0, totalHeight]);
+
+    var chart = d3.select(".chart")
+            .attr('width', totalWidth)
+            .attr('height', totalHeight);
+
+    var bar = chart.selectAll("g")
+            .data(testdata)
+            .enter().append('g')
+            .attr('transform', function(d, i) { return 'translate(' + i * barWidth + ',0)';});
+
+    chart.selectAll("rect")
+            .data(testdata)
+            .enter().append('rect')
+            .attr('x', 0)
+            .attr('y', y)
+            .attr('width', x)
+            .attr('height', y.rangeBand());
+
+     */
+    var width = 500;
+    var totalHeight = 200;
+
     var chart = d3.select('body')
             .append('div')
             .attr('class', 'chart');
@@ -103,44 +120,18 @@
             .domain([0, d3.max(testdata)])
             .range(['0px', '420px']);
 
+    var y = d3.scale.ordinal()
+            .domain(d3.range(testdata.length))
+            .rangeBands([0, totalHeight]);
+
     chart.selectAll('div')
             .data(testdata)
             .enter().append('div')
             .style("width", x)
-            .text(String);
+            .attr("height", y.rangeBands)
 
-     */
-
-    var totalWidth = 500;
-    var totalHeight = 200;
-    var barWidth = 20;
-    var scale = {
-        y: d3.scale.linear()
-                .domain([0, d3.max(testdata)])
-                .range(['0px', '420px'])
-    };
-
-    var chart = d3.select(".chart")
-            .attr({
-                'width': totalWidth,
-                'height': totalHeight
-            });
-
-    var bars = chart
-            .selectAll('g')
-            .data(testdata)
-            .enter()
-            .append('g');
-
-    bars.append("rect")
-            .attr({
-                'x': function(d, i) {
-                    return i * barWidth;
-                },
-                'width': barWidth - 1,
-                'height': scale.y
-            });
-
+            .text(String)
+            .attr("transform", 'rotate(-90)');
 
 //console.log(incomedata.filter(function(v) { return v.key == 1002}));
 //drawBarChart(1002);
