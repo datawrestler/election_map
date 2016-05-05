@@ -11,6 +11,18 @@
     <script src="//d3js.org/queue.v1.min.js"></script>
     <style>
 
+
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+
         .chart div {
             font: 10px sans-serif;
             background-color: steelblue;
@@ -32,6 +44,14 @@
         }
 
         .bar:hover {
+            fill: springgreen;
+        }
+
+        .button:hover {
+            fill: springgreen;
+        }
+
+        .buttontext:hover {
             fill: springgreen;
         }
 
@@ -154,6 +174,11 @@
             font-family: "Times New Roman";
             font-color: white;
         }
+
+        .buttontext {
+            font-size: 3px;
+            font-family: 'Times New Roman';
+        }
     
         path {
                 stroke: #fff;
@@ -168,6 +193,7 @@
             font-size: 16pt;
             font-family: Arial;
         }
+
 
         #tooltip {
             background: #eee;
@@ -247,6 +273,60 @@
         .attr("width", width)
         .attr("height", height)
         .on('click', clicked);
+
+    var tmpdata2 = [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5];
+
+    var legendColors = ['rgb(222,235,247)',  'rgb(222,235,247)', 'rgb(198,219,239)', 'rgb(158,202,225)',
+    'rgb(107,174,214)', 'rgb(66,146,198)', 'rgb(33,113,181)', 'rgb(8,81,156)',  'rgb(8,48,107)',   'rgb(255,222,222)',
+    'rgb(255,222,222)', 'rgb(255,198,198)', 'rgb(255,171,171)', 'rgb(255,137,137)', 'rgb(255,102,102)',
+    'rgb(255,73,73)', 'rgb(255,46,46)', 'rgb(255,23,23)', 'rgb(255,0,0)'];
+
+    var legendLabels = ['< 10%', '10% < 20%', '20% < 30%', '30% < 40%', '40% < 50%', '50% < 60%', '60% < 70%',
+    '70% < 80%', '80% < 90%', '< 10%', '10% < 20%', '20% < 30%', '30% < 40%', '40% < 50%', '50% < 60%', '60% < 70%',
+        '70% < 80%', '80% < 90%', '90% < 100%'];
+
+    // draw legend box
+    svg.append('rect')
+            .attr("width", 70)
+            .attr("height", 200)
+            .attr('x', 840)
+            .attr('y', 275)
+            .attr('stroke-width', '1px')
+            .attr('stroke', 'black')
+            .attr('fill', 'white');
+
+    svg.append("text")
+            .attr("font-size", '10px')
+            .attr('font-family', 'Courier')
+            .attr('x', 857)
+            .attr('y', 290)
+            .text('Legend');
+
+
+    // draw legend information
+    svg.selectAll('svg')
+            .data(tmpdata2)
+            .enter().append('svg:rect')
+            .attr('class', 'legendbox')
+            .attr('width', 7)
+            .attr('height', 7)
+            .attr('x', 850)
+            .attr('y', function(d,i){return (300+(i*9));})
+            .attr('fill', function(d, i) { return legendColors[i];});
+
+    // draw legend labels for percentage of election
+    svg.selectAll('svg')
+            .attr('class', 'subtitle')
+            .data(legendLabels)
+            .enter().append('text')
+            .attr('x', 859)
+            .attr('y', function(d, i) { return (306+(i*9));})
+            .attr("font-size", '7px')
+            .attr("font-family", 'Courier')
+            .style("font-weight", 'bold')
+            .text(function(d,i) { return legendLabels[i];});
+
+
     
     var g = svg.append("g");
     
@@ -280,7 +360,7 @@
     // hanlding when user clicks on a county on the map, draws pie chart as well for county data
     function clicked(d) {
         //remove temporary dom elements from dom
-        g.selectAll(['rect.rectclicked', 'text.subtitle', 'svg.piechart', 'svg.bar', 'rect.legend', 'text.legend', 'text.legendtitle']).remove();
+        g.selectAll(['rect.rectclicked', 'text.subtitle', 'text.buttontext', 'rect.button', 'rect.legend', 'text.legend', 'svg.piechart', 'svg.bar', 'rect.legend', 'text.legend', 'text.legendtitle']).remove();
 
         var x, y, k;
 
@@ -332,7 +412,7 @@
             centered = null;
 
             //remove temporary dom elements for county visualization
-            g.selectAll(['rect.rectclicked', 'svg.piechart','rect.legend', 'text.legend', 'text.subtitle', 'text.legendtitle', 'svg.bar']).remove();
+            g.selectAll(['rect.rectclicked', 'svg.piechart','text.buttontext', 'rect.button', 'rect.legend', 'text.legend', 'text.subtitle', 'text.legendtitle', 'svg.bar']).remove();
     }
 
     g.selectAll("path")
@@ -369,107 +449,21 @@ d3.select(self.frameElement).style("height", height + "px");
 
     // function drawDonut takes in two values, election result values, and draws a pie chart for
     // that particular county
-    function drawDonut(democratvalue, republicanvalue, centroid, countyname) {
 
-        var rectWidth = 80,
-                rectHeight = 80;
+    function zoomOut(){
+        g.selectAll(['rect.rectclicked', 'text.buttontext', 'rect.button', 'svg.piechart','rect.legend', 'text.legend', 'text.subtitle', 'text.legendtitle', 'svg.bar']).remove();
+        var x = width / 2;
+        var y = height / 2;
+        var k = 1;
+        centered = null;
 
-        g.append('rect')
-                .attr("class", 'rectclicked')
-                .attr("width", rectWidth)
-                .attr("height", rectHeight)
-                .attr("x", centroid[0]+30)
-                .attr("y", centroid[1]-50);
+        g.selectAll("path")
+                .classed('active', centered && function(d) { return d === centered;});
 
-        var tmpdata = {
-            electionresults: [democratvalue, republicanvalue]
-        };
-
-        var width = 100,
-                height = 60,
-                radius = Math.min(width, height) / 2;
-
-        var partyColor = ['#0000FF', '#fc0606']; //republican color, democrat color
-
-        var pie = d3.layout.pie()
-                .sort(null);
-
-        var arc = d3.svg.arc()
-                .innerRadius(radius - 7)
-                .outerRadius(radius - 1);
-
-        var svg = d3.select("g").append("svg")
-                .attr("width", width)
-                .attr("height", height)
-                .attr("class", 'piechart')
-                .attr('x', centroid[0]+20)
-                .attr('y', centroid[1]-40)
-                .append("g")
-                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-        var path2 = svg.selectAll("path")
-                .data(pie(tmpdata.electionresults))
-                .enter().append("path")
-                .attr("class", "piechart")
-                .attr("fill", function (d, i) {
-                    return partyColor[i]})
-                .attr("d", arc)
-                .on('mouseover', function(d){
-                    $("#tooltip")
-                            .css('left', (d3.event.pageX) + 'px')
-                            .css('top', (d3.event.pageY - 90) + 'px')
-                            .css('position', 'fixed')
-                            .html(d.value + '%')
-                            .show();
-                })
-                .on('mouseout', function(d){
-                    $("#tooltip").html('').hide();
-                });
-
-        // create legend data for donut chart democratic party
-        g.append('rect')
-                .attr('class', 'legend')
-                .attr('width', 5)
-                .attr('height', 5)
-                .attr('x', centroid[0]+55)
-                .attr('y', centroid[1]-20)
-                .attr('stroke', 'black')
-                .attr('fill', partyColor[0]);
-
-        g.append('text')
-                .attr('class', 'legend')
-                .attr('x', centroid[0] + 61)
-                .attr('y', centroid[1]-16)
-                .text('Obama');
-
-        // create legend data for donut chart republican party
-        g.append('rect')
-                .attr('class', 'legend')
-                .attr('width', 5)
-                .attr('height', 5)
-                .attr('x', centroid[0] + 55)
-                .attr('y', centroid[1]-8)
-                .attr('stroke', 'black')
-                .attr('fill', partyColor[1]);
-
-        g.append('text')
-                .attr('class', 'legend')
-                .attr('x', centroid[0] + 61)
-                .attr('y', centroid[1]-4)
-                .text('Romney');
-
-        g.append('text')
-                .attr('class', 'legendtitle')
-                .attr('x', centroid[0]+(50-((countyname.length+7)/2)))
-                .attr('y', centroid[1]-42)
-                .text(countyname+" County");
-
-        console.log(countyname.length);
-
-
-
-
-
+        g.transition()
+                .duration(750)
+                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+                .style("stroke-width", 1.5 / k + "px");
 
     }
 
@@ -621,6 +615,26 @@ d3.select(self.frameElement).style("height", height + "px");
                 .attr("fill", 'white')
                 .text(function(d){if (medianIncome.length === 6){return 'Median County Income: $'+medianIncome.slice(0,3)+','+medianIncome.slice(3,medianIncome.length)}
                     else return 'Median County Income: $'+medianIncome.slice(0,2)+','+medianIncome.slice(2, medianIncome.length)});
+
+
+        g.append('rect')
+                .attr('class', 'button')
+                .attr('width', 14)
+                .attr('height', 5)
+                .attr('x', centroid[0] + 31)
+                .attr('y', centroid[1] + 19)
+                .on('click', zoomOut)
+                .text('ZoomOut');
+
+        g.append('text')
+                .attr('class', 'buttontext')
+                .attr('x', centroid[0] + 32)
+                .attr('y', centroid[1] + 22)
+                .attr('fill', 'white')
+                .text("ZoomOut")
+                .on('click', zoomOut);
+
+
     }
 
 
@@ -635,6 +649,9 @@ d3.select(self.frameElement).style("height", height + "px");
     </div>
 
 <div id="chart"></div>
+
+
+
     
 </body>
 

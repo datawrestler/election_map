@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6d43c907-6f29-4ed9-80b8-a777871ec938" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index2.html" afterPath="$PROJECT_DIR$/index2.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/piechart.html" afterPath="$PROJECT_DIR$/piechart.html" />
     </list>
     <ignored path="Visualization.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,8 +38,8 @@
       <file leaf-file-name="piechart.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/piechart.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="49" column="22" selection-start-line="0" selection-start-column="0" selection-end-line="54" selection-end-column="7" />
+            <state relative-caret-position="1800">
+              <caret line="153" column="5" selection-start-line="153" selection-start-column="5" selection-end-line="153" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -46,12 +48,12 @@
       <file leaf-file-name="index2.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="566" column="8" selection-start-line="566" selection-start-column="8" selection-end-line="566" selection-end-column="10" />
+            <state relative-caret-position="1528">
+              <caret line="651" column="0" selection-start-line="651" selection-start-column="0" selection-end-line="651" selection-end-column="0" />
               <folding>
-                <marker date="1462415077000" expanded="true" signature="16607:16618" placeholder="..." />
-                <marker date="1462415077000" expanded="true" signature="16653:16664" placeholder="..." />
-                <marker date="1462415077000" expanded="true" signature="16688:16705" placeholder="..." />
+                <marker date="1462429852563" expanded="true" signature="16554:16565" placeholder="..." />
+                <marker date="1462429852563" expanded="true" signature="16600:16611" placeholder="..." />
+                <marker date="1462429852563" expanded="true" signature="16635:16652" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -60,12 +62,9 @@
       <file leaf-file-name="barchart.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/barchart.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-15">
+            <state relative-caret-position="1377">
               <caret line="81" column="104" selection-start-line="81" selection-start-column="104" selection-end-line="81" selection-end-column="136" />
-              <folding>
-                <marker date="1462411148000" expanded="true" signature="3910:3916" placeholder="..." />
-                <marker date="1462411148000" expanded="true" signature="3910:3927" placeholder="..." />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -85,8 +84,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/piechart.html" />
         <option value="$PROJECT_DIR$/barchart.html" />
+        <option value="$PROJECT_DIR$/piechart.html" />
         <option value="$PROJECT_DIR$/index2.html" />
       </list>
     </option>
@@ -97,10 +96,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-223" />
-    <option name="y" value="23" />
-    <option name="width" value="1060" />
-    <option name="height" value="797" />
+    <option name="x" value="-1088" />
+    <option name="y" value="-8" />
+    <option name="width" value="1096" />
+    <option name="height" value="1896" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -127,60 +126,28 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Election_Visual" />
+              <option name="myItemId" value="election_map" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Election_Visual" />
+              <option name="myItemId" value="election_map" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Election_Visual" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Election_Visual" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Election_Visual" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Election_Visual" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Election_Visual" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="IncomeData" />
+              <option name="myItemId" value="election_map" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -267,17 +234,18 @@
       <workItem from="1462313449857" duration="1626000" />
       <workItem from="1462340334858" duration="4867000" />
       <workItem from="1462398004040" duration="10440000" />
+      <workItem from="1462424203661" duration="5644000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43606000" />
+    <option name="totallyTimeSpent" value="49250000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-223" y="23" width="1060" height="797" extended-state="0" />
+    <frame x="-1088" y="-8" width="1096" height="1896" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15660377" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15648147" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -323,6 +291,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/piechart.html">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="833">
+          <caret line="49" column="22" selection-start-line="0" selection-start-column="0" selection-end-line="54" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1462429852563" expanded="true" signature="16554:16565" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16600:16611" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16635:16652" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/barchart.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1377">
+          <caret line="81" column="104" selection-start-line="81" selection-start-column="104" selection-end-line="81" selection-end-column="136" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Data/ElectionData/2012_election_county.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/piechart.html">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="735">
           <caret line="49" column="22" selection-start-line="0" selection-start-column="0" selection-end-line="54" selection-end-column="7" />
           <folding />
@@ -334,9 +338,9 @@
         <state relative-caret-position="4125">
           <caret line="275" column="12" selection-start-line="275" selection-start-column="12" selection-end-line="278" selection-end-column="15" />
           <folding>
-            <marker date="1462415077000" expanded="true" signature="16607:16618" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16653:16664" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16688:16705" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16554:16565" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16600:16611" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16635:16652" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -345,10 +349,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1462411148000" expanded="true" signature="3910:3916" placeholder="..." />
-            <marker date="1462411148000" expanded="true" signature="3910:3927" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -381,9 +382,9 @@
         <state relative-caret-position="4675">
           <caret line="275" column="12" selection-start-line="275" selection-start-column="12" selection-end-line="278" selection-end-column="15" />
           <folding>
-            <marker date="1462415077000" expanded="true" signature="16607:16618" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16653:16664" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16688:16705" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16554:16565" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16600:16611" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16635:16652" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -392,10 +393,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1462411148000" expanded="true" signature="3910:3916" placeholder="..." />
-            <marker date="1462411148000" expanded="true" signature="3910:3927" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -428,9 +426,9 @@
         <state relative-caret-position="4125">
           <caret line="275" column="12" selection-start-line="275" selection-start-column="12" selection-end-line="278" selection-end-column="15" />
           <folding>
-            <marker date="1462415077000" expanded="true" signature="16607:16618" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16653:16664" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16688:16705" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16554:16565" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16600:16611" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16635:16652" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -439,10 +437,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1462411148000" expanded="true" signature="3910:3916" placeholder="..." />
-            <marker date="1462411148000" expanded="true" signature="3910:3927" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -459,9 +454,9 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1462415077000" expanded="true" signature="16607:16618" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16653:16664" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16688:16705" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16554:16565" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16600:16611" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16635:16652" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -487,9 +482,9 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1462415077000" expanded="true" signature="16607:16618" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16653:16664" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16688:16705" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16554:16565" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16600:16611" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16635:16652" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -515,9 +510,9 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1462415077000" expanded="true" signature="16607:16618" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16653:16664" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16688:16705" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16554:16565" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16600:16611" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16635:16652" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -535,9 +530,9 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1462415077000" expanded="true" signature="16607:16618" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16653:16664" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16688:16705" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16554:16565" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16600:16611" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16635:16652" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -555,9 +550,9 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1462415077000" expanded="true" signature="16607:16618" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16653:16664" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16688:16705" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16554:16565" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16600:16611" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16635:16652" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -575,9 +570,9 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1462415077000" expanded="true" signature="16607:16618" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16653:16664" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16688:16705" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16554:16565" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16600:16611" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16635:16652" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -599,14 +594,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/piechart.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="49" column="22" selection-start-line="0" selection-start-column="0" selection-end-line="54" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Data/IncomeData/COMBINED_2012.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -617,23 +604,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/barchart.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-15">
+        <state relative-caret-position="1377">
           <caret line="81" column="104" selection-start-line="81" selection-start-column="104" selection-end-line="81" selection-end-column="136" />
-          <folding>
-            <marker date="1462411148000" expanded="true" signature="3910:3916" placeholder="..." />
-            <marker date="1462411148000" expanded="true" signature="3910:3927" placeholder="..." />
-          </folding>
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/piechart.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1800">
+          <caret line="153" column="5" selection-start-line="153" selection-start-column="5" selection-end-line="153" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="566" column="8" selection-start-line="566" selection-start-column="8" selection-end-line="566" selection-end-column="10" />
+        <state relative-caret-position="1528">
+          <caret line="651" column="0" selection-start-line="651" selection-start-column="0" selection-end-line="651" selection-end-column="0" />
           <folding>
-            <marker date="1462415077000" expanded="true" signature="16607:16618" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16653:16664" placeholder="..." />
-            <marker date="1462415077000" expanded="true" signature="16688:16705" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16554:16565" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16600:16611" placeholder="..." />
+            <marker date="1462429852563" expanded="true" signature="16635:16652" placeholder="..." />
           </folding>
         </state>
       </provider>
