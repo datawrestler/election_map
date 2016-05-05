@@ -528,12 +528,16 @@ d3.select(self.frameElement).style("height", height + "px");
         console.log(mind);
         console.log(maxd);
 
+        //var chartHeight = $svg.outerHeight();
+
         var y = d3.scale.linear()
                 .domain([maxd, mind])
                 .range([height/30, 0]);
 
         //y.domain([0, d3.max(testdata)]);
         //y.domain([0, height]);
+
+
 
         var tip = d3.tip()
                 .attr("class", 'd3-tip')
@@ -560,6 +564,25 @@ d3.select(self.frameElement).style("height", height + "px");
                         })
                         .on('mouseover', tip.show)
                         .on('mouseout', tip.hide);
+        /*
+
+        var bars = svg.selectAll(".bar")
+                .data(testdata)
+                .enter().append('path:rect')
+                .attr("class", 'bar')
+                .attr('x', function (d, i) {
+                    return (i*4);
+                })
+                .attr('y', chartHeight)
+                .attr("height", 0)
+                .transition()
+                .delay(function(d,i) { return i * 100;})
+                .attr('y', function(d,i) { return y(d);})
+                .attr("height", function(d) { return chartHeight - y(d);})
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide);
+
+ */
 
 
         var xAxis = d3.svg.axis()
