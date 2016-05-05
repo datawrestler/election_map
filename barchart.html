@@ -6,6 +6,8 @@
     <script src="//d3js.org/d3.v3.min.js"></script>
     <script src="//d3js.org/topojson.v1.min.js"></script>
     <script src="//d3js.org/queue.v1.min.js"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <style>
         .chart div {
             font: 10px sans-serif;
@@ -21,12 +23,44 @@
             fill: steelblue;
         }
 
-        .bartext {
-            font-size: 12px;
-            color: red;
-            font-family: Courier;
-
+        .bar {
+            fill: steelblue;
         }
+
+        .bar:hover {
+            fill: springgreen;
+        }
+
+
+        .d3-tip {
+            line-height: 1;
+            font-weight: bold;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            border-radius: 2px;
+        }
+
+        /* Creates a small triangle extender for the tooltip */
+        .d3-tip:after {
+            box-sizing: border-box;
+            display: inline;
+            font-size: 10px;
+            width: 100%;
+            line-height: 1;
+            color: rgba(0, 0, 0, 0.8);
+            content: "\25BC";
+            position: absolute;
+            text-align: center;
+        }
+
+        /* Style northward tooltips differently */
+        .d3-tip.n:after {
+            margin: -1px 0 0 0;
+            top: 100%;
+            left: 0;
+        }
+
     </style>
 </head>
 <body>
@@ -36,119 +70,113 @@
     //function drawDonut(value1, value2) {
 
 
-    function drawBarChart(countyid) {
-        var tmpdata = incomedata.filter(function(v){return v.key == countyid});
-        console.log(tmpdata[0]['key']);
-    }
+    //function drawBarChart(countyid) {
+    //    var tmpdata = incomedata.filter(function(v){return v.key == countyid});
+    //    console.log(tmpdata[0]['key']);
+    //}
 
     var incomedata = null;
     d3.csv("Data/IncomeData/COMBINED_2012.csv")
             .row(function(d) { return {key: d.county_id, median_income: d.median_income, total: d.total,
                 under1: d.under1, under10k: d.under10k, under25k: d.under25k, under50k: d.under50k,
-            under75k: d.under75k, under100k: d.under100k, under200k: d.under200k, over200k: d.over200k};})
+            under75k: d.under75k, under100k: d.under100k, under200k: d.under200k, over200k: d.over200k, county_name: d.state_county_name};})
             .get(function(error, rows){
                 //console.log(rows);
                 incomedata = rows;
             });
 
-    var labels = ["under $1","under $10k","under $25k","under $50k","under $75k","under $100k","under $200k","over $200k"]
+    function drawBarChart(testdata) {
 
-    var testdata = [250, 3730, 6460, 5640, 3220, 2020, 2030, 350];
+        var labels = ["under $1", "under $10k", "under $25k", "under $50k", "under $75k", "under $100k", "under $200k", "over $200k"]
 
+        var width = 500;
+        var totalHeight = 200;
 
-    var width = 500;
-    var totalHeight = 200;
-
-    var height = 20 * testdata.length;
-
+        var height = 20 * testdata.length;
 
 
-    var svg = d3.select('body')
-            .append('svg:svg')
-            .attr('class', 'chart')
-            .attr('width', 420)
-            .attr('height', 40 * testdata.length);
+        var svg = d3.select('body')
+                .append('svg:svg')
+                .attr('class', 'chart')
+                .attr('width', 420)
+                .attr('height', 40 * testdata.length);
 
-    var x = d3.scale.linear()
-            .domain([0, d3.max(testdata)])
-            .range(['0px', '420px']);
-
-
-
-    svg.append('g')
-            .attr('class', 'x axis')
-            .attr('transform', 'translate(0,' + height + ')')
-            .data(labels)
-            .selectAll('text')
-            .style('text-anchor', 'end')
-            .attr('dx', '-.8em')
-            .attr('dy', '-.55em')
-            .attr('transform', 'rotate(-90)');
-
-    //var y = d3.scale.ordinal()
-    //        .domain(d3.range(testdata.length))
-    //        .rangeBands([0, totalHeight]);
-
-    var y = d3.scale.linear().range([height, 0]);
-
-    y.domain([0, d3.max(testdata)]);
+        var x = d3.scale.linear()
+                .domain([0, d3.max(testdata)])
+                .range(['0px', '420px']);
 
 
+        svg.append('g')
+                .attr('class', 'x axis')
+                .attr('transform', 'translate(0,' + height + ')')
+                .data(labels)
+                .selectAll('text')
+                .style('text-anchor', 'end')
+                .attr('dx', '-.8em')
+                .attr('dy', '-.55em')
+                .attr('transform', 'rotate(-90)');
 
-    svg.selectAll('rect')
-            .data(testdata)
-            .enter().append('svg:rect')
-            .attr('x', function(d, i) {return i * 20;})
-            .attr('y', function(d, i) { return y(d);})
-            .attr("width", 20)
-            .attr('height', function(d, i) { return (height-y(d));})
-            .text(String);
-            //.attr("transform", 'rotate(-90)');
+        //var y = d3.scale.ordinal()
+        //        .domain(d3.range(testdata.length))
+        //        .rangeBands([0, totalHeight]);
 
-    var xAxis = d3.svg.axis()
-            .scale(labels);
-    /*
-    svg.selectAll('text')
-            .data(labels)
-            .enter().append('text')
-            //.attr('class', 'bartext')
-            .attr('fill', 'red')
-            .attr("transform", "translate(0" + height + ")")
-            .style('text-anchor', 'end')
-            .attr('dx', '2em')
-            .attr('dy', '0em')
-            .attr('transform', function(d) { return 'rotate(-90)'})
-            //.call(xAxis)
+        var y = d3.scale.linear().range([height, 0]);
 
-            //.attr('x', function(d, i) {return i * 9;})
-            .text(function(d){ return d;})
+        y.domain([0, d3.max(testdata)]);
 
-            //.style('text-anchor', 'start')
-            ;
+        var tip = d3.tip()
+                .attr("class", 'd3-tip')
+                .offset([-10, 0])
+                .html(function (d, i) {
+                    return "<strong># of Returns:</strong> <span style='color:springgreen'>" + testdata[i] + "</span>";
+                });
+
+        svg.call(tip);
+
+        svg.selectAll('.bar')
+                .data(testdata)
+                .enter().append('svg:rect')
+                .attr("class", 'bar')
+                .attr('x', function (d, i) {
+                    return i * 20;
+                })
+                .attr('y', function (d, i) {
+                    return y(d);
+                })
+                .attr("width", 20)
+                .attr('height', function (d, i) {
+                    return (height - y(d));
+                })
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide);
+
+        var xAxis = d3.svg.axis()
+                .scale(labels);
+
+        var yAxis = d3.svg.axis()
+                .scale(testdata)
+                .orient("left")
+                .ticks(10);
 
 
-    svg.append('g')
-            .data(labels)
-            .enter().append('text')
-            .selectAll("text")
-            .attr('class', 'bartext')
-            .attr('fill', 'red')
-            .attr("transform", "translate(0" + height + ")")
-            .call(xAxis)
+        svg.selectAll("text")
+                .attr("class", 'bartext')
+                .data(labels)
+                .enter().append('text')
+                .style("font-size", "10px")
+                .style("font-family", 'Courier New')
+                .attr("transform", function (d, i) {
+                    return 'translate(' + (3 + (i * 20)) + ", 160)" + 'rotate(90)'
+                })
+                .text(function (d) {
+                    return d;
+                });
 
-            .attr('x', function(d, i) {return i * 9;})
-            .attr('y', 200)
-            .text(function(d){ return d;})
-            .attr("dx", '.35em')
-            .attr("transform", 'rotate(-90)')
-    //.style('text-anchor', 'start')
- */
+    }
 
-    svg.selectAll(".text")
-            .data(labels)
-            .enter().append('text')
-            .attr("transform", function(d,i) { return 'translate(' + (3+(i*20)) + ", 160)" + 'rotate(90)'})
-            .text(function(d) { return d;});
+    var testdata2 = [3000, 3730, 6460, 5640, 3220, 2020, 2030, 350];
+
+    drawBarChart(testdata2);
 
 
 //console.log(incomedata.filter(function(v) { return v.key == 1002}));

@@ -6,9 +6,65 @@
     <title>Presidential Election Visualization</title>
     <script src="//d3js.org/d3.v3.min.js"></script>
     <script src="//d3js.org/topojson.v1.min.js"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="//d3js.org/queue.v1.min.js"></script>
     <style>
+
+        .chart div {
+            font: 10px sans-serif;
+            background-color: steelblue;
+            text-align: right;
+            padding: 3px;
+            margin: 1px;
+            color: white;
+        }
+
+        .chart rect {
+            stroke: white;
+            fill: steelblue;
+        }
+
+        .bar {
+            fill: steelblue;
+            stroke: white;
+            stroke-width: .1px;
+        }
+
+        .bar:hover {
+            fill: springgreen;
+        }
+
+
+        .d3-tip {
+            line-height: 1;
+            font-weight: bold;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            border-radius: 2px;
+        }
+
+        /* Creates a small triangle extender for the tooltip */
+        .d3-tip:after {
+            box-sizing: border-box;
+            display: inline;
+            font-size: 10px;
+            width: 100%;
+            line-height: 1;
+            color: rgba(0, 0, 0, 0.8);
+            content: "\25BC";
+            position: absolute;
+            text-align: center;
+        }
+
+        /* Style northward tooltips differently */
+        .d3-tip.n:after {
+            margin: -1px 0 0 0;
+            top: 100%;
+            left: 0;
+        }
+
 
         .income1 { fill:rgb(247,251,255); }
         .income2 { fill:rgb(222,235,247); }
@@ -47,15 +103,15 @@
             fill: none;
             pointer-events: all;
             stroke: black;
-            stroke-width: .5px;
+            stroke-width: 3px;
         }
 
         .rectclicked {
-            fill: steelblue;
+            fill: black;
             pointer-events: all;
             stroke: black;
             stroke-width: .5px;
-            opacity: 0.9;
+            opacity: 0.6;
 
         }
 
@@ -88,8 +144,15 @@
         }
 
         .legendtitle {
-            font-size: 8px;
-            font-family: "Courier New"
+            font-size: 6px;
+            font-family: "Times New Roman";
+            font-color: white;
+        }
+
+        .subtitle {
+            font-size: 4px;
+            font-family: "Times New Roman";
+            font-color: white;
         }
     
         path {
@@ -217,7 +280,7 @@
     // hanlding when user clicks on a county on the map, draws pie chart as well for county data
     function clicked(d) {
         //remove temporary dom elements from dom
-        g.selectAll(['rect.rectclicked', 'svg.piechart','rect.legend', 'text.legend', 'text.legendtitle']).remove();
+        g.selectAll(['rect.rectclicked', 'text.subtitle', 'svg.piechart', 'svg.bar', 'rect.legend', 'text.legend', 'text.legendtitle']).remove();
 
         var x, y, k;
 
@@ -225,10 +288,26 @@
         //console.log(electiondata.filter(function(v){return v.key == d.id}));
         var testdata = electiondata.filter(function(v){return v.key == d.id});
 
-        //capture the values for the county data
+        //filter income data based on county id
+        var incomedata2 = incomedata.filter(function(v) {return v.key == d.id});
+        console.log(incomedata2);
+
+        //capture the values for the county data from the income spreadsheet
+
+        var barData = [incomedata2[0]['under1'], incomedata2[0]['under10k'], incomedata2[0]['under25k'], incomedata2[0]['under50k'],
+        incomedata2[0]['under75k'], incomedata2[0]['under100k'], incomedata2[0]['under200k'], incomedata2[0]['over200k']];
+
+        var countyName = incomedata2[0]['county_name'];
+
+        var medianIncome = incomedata2[0]['median_income'];
+
+        console.log(barData);
+
         try {
-            console.log(testdata[0]['key']);
-            drawDonut(testdata[0]['percent_obama'], testdata[0]['percent_romney'], path.centroid(d), testdata[0]['county_name']);
+            //console.log(testdata[0]['key']);
+            //drawDonut(testdata[0]['percent_obama'], testdata[0]['percent_romney'], path.centroid(d), testdata[0]['county_name']);
+            console.log(barData);
+            drawBarChart(barData, path.centroid(d), countyName, medianIncome);
         }
 
         catch(err){
@@ -253,7 +332,7 @@
             centered = null;
 
             //remove temporary dom elements for county visualization
-            g.selectAll(['rect.rectclicked', 'svg.piechart','rect.legend', 'text.legend', 'text.legendtitle']).remove();
+            g.selectAll(['rect.rectclicked', 'svg.piechart','rect.legend', 'text.legend', 'text.subtitle', 'text.legendtitle', 'svg.bar']).remove();
     }
 
     g.selectAll("path")
@@ -276,6 +355,16 @@ d3.select(self.frameElement).style("height", height + "px");
             .get(function(error, rows){
                 //console.log(rows);
                 electiondata = rows;
+            });
+
+    var incomedata = null;
+    d3.csv("Data/IncomeData/COMBINED_2012.csv")
+            .row(function(d) { return {key: d.county_id, median_income: d.median_income, total: d.total,
+                under1: d.under1, under10k: d.under10k, under25k: d.under25k, under50k: d.under50k,
+                under75k: d.under75k, under100k: d.under100k, under200k: d.under200k, over200k: d.over200k, county_name: d.state_county_name};})
+            .get(function(error, rows){
+                //console.log(rows);
+                incomedata = rows;
             });
 
     // function drawDonut takes in two values, election result values, and draws a pie chart for
@@ -382,6 +471,133 @@ d3.select(self.frameElement).style("height", height + "px");
 
 
 
+    }
+
+    function drawBarChart(testdata, centroid, countyName, medianIncome) {
+
+
+        var labels = ["under $1", "under $10k", "under $25k", "under $50k", "under $75k", "under $100k", "under $200k", "over $200k"]
+
+        var width = 75;
+
+        var height = 75;
+
+        g.append("rect")
+                .attr("class", 'rectclicked')
+                .attr("width", width)
+                .attr('height', height)
+                .attr('x', centroid[0] + 30)
+                .attr('y', centroid[1]-50);
+
+        var svg = d3.select("g").append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .attr("class", 'bar')
+                .attr('x', centroid[0]+13)
+                .attr('y', centroid[1]-50)
+                .append("g")
+                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+
+
+
+
+
+        var x = d3.scale.linear()
+                .domain([0, 100])
+                .range(['0px', '100px']);
+
+
+        g.append('path')
+                .attr('class', 'x axis')
+                .attr('transform', 'translate(0,' + height + ')')
+                .data(labels)
+                .selectAll('text')
+                .style('text-anchor', 'end')
+                .attr('dx', '-.8em')
+                .attr('dy', '-.55em')
+                .attr('transform', 'rotate(-90)');
+
+        //var y = d3.scale.ordinal()
+        //        .domain(d3.range(testdata.length))
+        //        .rangeBands([0, totalHeight]);
+
+        mind = d3.min(testdata);
+        maxd = d3.max(testdata);
+
+        console.log(mind);
+        console.log(maxd);
+
+        var y = d3.scale.linear()
+                .domain([maxd, mind])
+                .range([height/30, 0]);
+
+        //y.domain([0, d3.max(testdata)]);
+        //y.domain([0, height]);
+
+        var tip = d3.tip()
+                .attr("class", 'd3-tip')
+                .offset([-10, 0])
+                .html(function (d, i) {
+                    return "<strong># of Returns </strong><span style='color:white'>"+labels[i]+"</span><span style='color:white'>:</span> <span style='color:springgreen'>" + testdata[i] + "</span>";
+                });
+
+        svg.call(tip);
+
+        var bars = svg.selectAll(".bar")
+                        .data(testdata)
+                        .enter().append('path:rect')
+                        .attr("class", 'bar')
+                        .attr('x', function (d, i) {
+                            return (i*4);
+                        })
+                        .attr('y', function (d, i) {
+                            return y(d);
+                        })
+                        .attr("width", 4)
+                        .attr('height', function (d, i) {
+                            return (height-y(d));
+                        })
+                        .on('mouseover', tip.show)
+                        .on('mouseout', tip.hide);
+
+
+        var xAxis = d3.svg.axis()
+                .scale(labels);
+
+        var yAxis = d3.svg.axis()
+                .scale(testdata)
+                .orient("left")
+                .ticks(10);
+
+
+        svg.selectAll("text")
+                .attr("class", 'bartext')
+                .data(labels)
+                .enter().append('text')
+                .style("font-size", "10px")
+                .style("font-family", 'Courier New')
+                .attr("transform", function (d, i) {
+                    return 'translate(' + (20 + (i * 3)) + ", 160)" + 'rotate(90)'
+                })
+                .text(function (d) {
+                    return d;
+                });
+
+        g.append('text')
+                .attr('class', 'legendtitle')
+                .attr('x', centroid[0]+(50-((countyName.length+7)/2)))
+                .attr('y', centroid[1]-42)
+                .attr("fill", 'white')
+                .text(countyName);
+
+        g.append('text')
+                .attr('class', 'subtitle')
+                .attr('x', centroid[0]+(50-((countyName.length+7)/2)))
+                .attr('y', centroid[1]-35)
+                .attr("fill", 'white')
+                .text(function(d){if (medianIncome.length === 6){return 'Median County Income: $'+medianIncome.slice(0,3)+','+medianIncome.slice(3,medianIncome.length)}
+                    else return 'Median County Income: $'+medianIncome.slice(0,2)+','+medianIncome.slice(2, medianIncome.length)});
     }
 
 
