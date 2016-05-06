@@ -122,19 +122,10 @@
         .election19 { fill:rgb(255,0,0); }
 
 
-    
+
         .background {
             fill: none;
             pointer-events: all;
-            stroke: black;
-            stroke-width: 3px;
-        }
-
-        .dashboard {
-            fill: lightblue;
-            box-shadow: 0 0 5px #999999;
-            pointer-events: all;
-            opacity: 0.5;
             stroke: black;
             stroke-width: 3px;
         }
@@ -153,7 +144,7 @@
             opacity: 1;
 
         }
-    
+
         .land {
             fill: #222;
         }
@@ -192,15 +183,15 @@
             font-size: 3px;
             font-family: 'Times New Roman';
         }
-    
+
         path {
-                stroke: #fff;
-                stroke-width: .5px;
-            }
-        
-            path:hover {
-                fill: orange;
-            }
+            stroke: #fff;
+            stroke-width: .5px;
+        }
+
+        path:hover {
+            fill: orange;
+        }
 
         .slice text {
             font-size: 16pt;
@@ -229,24 +220,24 @@
 <body>
 
 
-    <script type='text/javascript'>
+<script type='text/javascript'>
 
-    
+
     var incomeRating = d3.map();
-    
+
     queue()
-        .defer(d3.json, "Data/us-10m.json")
-        //.defer(d3.csv, 'Data/IncomeData/medianincome_2012.csv', function(d) {incomeRating.set(d.county_id, +d.median_income);})
+            .defer(d3.json, "Data/us-10m.json")
+            //.defer(d3.csv, 'Data/IncomeData/medianincome_2012.csv', function(d) {incomeRating.set(d.county_id, +d.median_income);})
             .defer(d3.csv, 'Data/ElectionData/2012_full_election_county2.csv', function(d) {incomeRating.set(d.county_id, d.percent_romney);})
-        .await(drawmap);
+            .await(drawmap);
 
 
 
 
     var width = 960,
-        height = 500,
-        scale0 = (width - 1) / 2 / Math.PI,
-        centered;
+            height = 500,
+            scale0 = (width - 1) / 2 / Math.PI,
+            centered;
 
     var totalwidth = 1400,
             totalHeight = 500;
@@ -270,14 +261,14 @@
 
 
     var projection = d3.geo.albersUsa()
-        .scale(1000)
-        .translate([width / 2, height / 2]);
-    
+            .scale(1000)
+            .translate([width / 2, height / 2]);
+
 
     //set the color gradient based on income level
     var scaleincome = d3.scale.quantize()
-        .domain([0, 100000])
-        .range(d3.range(9).map(function(i) {return "income" + i;}));
+            .domain([0, 100000])
+            .range(d3.range(9).map(function(i) {return "income" + i;}));
 
     var scaleDemocrat = d3.scale.quantize()
             .domain([0,100])
@@ -286,19 +277,19 @@
     var scaleElection = d3.scale.quantize()
             .domain([0,101])
             .range(d3.range(19).map(function(i){ return "election" + i;}));
-    
+
     var zoom = d3.behavior.zoom()
-        .translate([width / 2, height / 2])
-        .scale(scale0)
-        .scaleExtent([scale0, 8 * scale0])
-        .on("zoom", zoomed);
-    
+            .translate([width / 2, height / 2])
+            .scale(scale0)
+            .scaleExtent([scale0, 8 * scale0])
+            .on("zoom", zoomed);
+
     var path = d3.geo.path()
-        .projection(projection);
-    
+            .projection(projection);
+
     var svg = d3.select("body").append("svg")
-        .attr("width", totalwidth)
-        .attr("height", totalHeight);
+            .attr("width", totalwidth)
+            .attr("height", totalHeight);
 
     svg.call(incometip);
 
@@ -313,20 +304,20 @@
 
     //draw map rectangle
     svg.append("rect")
-        .attr("class", "background")
-        .attr("width", width)
-        .attr("height", height)
-        .on('click', clicked);
+            .attr("class", "background")
+            .attr("width", width)
+            .attr("height", height)
+            .on('click', clicked);
 
     var tmpdata2 = [5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5];
 
     var legendColors = ['rgb(222,235,247)',  'rgb(222,235,247)', 'rgb(198,219,239)', 'rgb(158,202,225)',
-    'rgb(107,174,214)', 'rgb(66,146,198)', 'rgb(33,113,181)', 'rgb(8,81,156)',  'rgb(8,48,107)',   'rgb(255,222,222)',
-    'rgb(255,222,222)', 'rgb(255,198,198)', 'rgb(255,171,171)', 'rgb(255,137,137)', 'rgb(255,102,102)',
-    'rgb(255,73,73)', 'rgb(255,46,46)', 'rgb(255,23,23)', 'rgb(255,0,0)'];
+        'rgb(107,174,214)', 'rgb(66,146,198)', 'rgb(33,113,181)', 'rgb(8,81,156)',  'rgb(8,48,107)',   'rgb(255,222,222)',
+        'rgb(255,222,222)', 'rgb(255,198,198)', 'rgb(255,171,171)', 'rgb(255,137,137)', 'rgb(255,102,102)',
+        'rgb(255,73,73)', 'rgb(255,46,46)', 'rgb(255,23,23)', 'rgb(255,0,0)'];
 
     var legendLabels = ['< 10%', '10% < 20%', '20% < 30%', '30% < 40%', '40% < 50%', '50% < 60%', '60% < 70%',
-    '70% < 80%', '80% < 90%', '< 10%', '10% < 20%', '20% < 30%', '30% < 40%', '40% < 50%', '50% < 60%', '60% < 70%',
+        '70% < 80%', '80% < 90%', '< 10%', '10% < 20%', '20% < 30%', '30% < 40%', '40% < 50%', '50% < 60%', '60% < 70%',
         '70% < 80%', '80% < 90%', '90% < 100%'];
 
     // draw legend box
@@ -373,31 +364,31 @@
             .attr("font-family", 'Courier')
             .style("font-weight", 'bold')
             .transition()
-           // .delay(function(d,i) {return i*105;})
+            // .delay(function(d,i) {return i*105;})
             .text(function(d,i) { return legendLabels[i];});
 
 
 
 
-    
+
     var g = svg.append("g");
-    
+
     function drawmap(error, mapdata){
         if (error) console.log(error);
 
 
         g.selectAll("path")
-            .data(topojson.feature(mapdata,    mapdata.objects.counties).features)
-            .enter().append("path")
+                .data(topojson.feature(mapdata,    mapdata.objects.counties).features)
+                .enter().append("path")
                 .attr("class", function(d) {return scaleElection(incomeRating.get(d.id));})
                 .attr("d", path)
                 .on('click', clicked);
 
 
         g.insert("path", ".graticule")
-            .datum(topojson.mesh(mapdata, mapdata.objects.states, function(a, b) { return a !== b; }))
-            .attr("class", "state-boundary")
-            .attr("d", path);
+                .datum(topojson.mesh(mapdata, mapdata.objects.states, function(a, b) { return a !== b; }))
+                .attr("class", "state-boundary")
+                .attr("d", path);
     };
 
     //Draw dashboard rect
@@ -406,9 +397,7 @@
             .attr('height', 500)
             .attr('x', 960)
             .attr('y', 0)
-            .attr("fill", 'blue')
-            .attr("opacity", '.8')
-            .attr('class', 'dashboard');
+            .attr('class', 'background');
 
     svg.selectAll('circle')
             .data(initialcircles)
@@ -429,10 +418,10 @@
 
     function zoomed() {
         projection
-            .translate(zoom.translate())
-            .scale(zoom.scale());
+                .translate(zoom.translate())
+                .scale(zoom.scale());
         svg.selectAll("path")
-            .attr("d", path);
+                .attr("d", path);
     }
 
     // hanlding when user clicks on a county on the map, draws pie chart as well for county data
@@ -453,7 +442,7 @@
         //capture the values for the county data from the income spreadsheet
 
         var barData = [incomedata2[0]['under1'], incomedata2[0]['under10k'], incomedata2[0]['under25k'], incomedata2[0]['under50k'],
-        incomedata2[0]['under75k'], incomedata2[0]['under100k'], incomedata2[0]['under200k'], incomedata2[0]['over200k']];
+            incomedata2[0]['under75k'], incomedata2[0]['under100k'], incomedata2[0]['under200k'], incomedata2[0]['over200k']];
 
         var countyName = incomedata2[0]['county_name'];
 
@@ -465,7 +454,7 @@
             //console.log(testdata[0]['key']);
             //drawDonut(testdata[0]['percent_obama'], testdata[0]['percent_romney'], path.centroid(d), testdata[0]['county_name']);
             console.log(barData);
-            //drawBarChart(barData, path.centroid(d), countyName, medianIncome);
+            drawBarChart(barData, path.centroid(d), countyName, medianIncome);
         }
 
         catch(err){
@@ -491,25 +480,25 @@
 
             //remove temporary dom elements for county visualization
             g.selectAll(['rect.rectclicked', 'svg.piechart','text.buttontext', 'rect.button', 'rect.legend', 'text.legend', 'text.subtitle', 'text.legendtitle', 'svg.bar']).remove();
+        }
+
+        g.selectAll("path")
+                .classed("active", centered && function(d) { return d === centered; });
+
+        g.transition()
+                .duration(750)
+                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+                .style("stroke-width", 1.5 / k + "px");
+
     }
 
-    g.selectAll("path")
-        .classed("active", centered && function(d) { return d === centered; });
-
-    g.transition()
-        .duration(750)
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
-        .style("stroke-width", 1.5 / k + "px");
-
-}
-
-d3.select(self.frameElement).style("height", height + "px");
+    d3.select(self.frameElement).style("height", height + "px");
 
     // Read in the election data per county
     var electiondata = null;
     d3.csv("Data/ElectionData/2012_full_election_county2.csv")
             .row(function(d) { return {key: d.county_id, obama_vote: d.obama_vote, romney_vote: d.romney_vote,
-                        state: d.state, county_name: d.county_name, percent_obama: d.percent_obama, percent_romney: d.percent_romney};})
+                state: d.state, county_name: d.county_name, percent_obama: d.percent_obama, percent_romney: d.percent_romney};})
             .get(function(error, rows){
                 //console.log(rows);
                 electiondata = rows;
@@ -621,40 +610,40 @@ d3.select(self.frameElement).style("height", height + "px");
         svg.call(tip);
 
         var bars = svg.selectAll(".bar")
-                        .data(testdata)
-                        .enter().append('path:rect')
-                        .attr("class", 'bar')
-                        .attr('x', function (d, i) {
-                            return (i*4);
-                        })
-                        .attr('y', function (d, i) {
-                            return y(d);
-                        })
-                        .attr("width", 4)
-                        .attr('height', function (d, i) {
-                            return (height-y(d));
-                        })
-                        .on('mouseover', tip.show)
-                        .on('mouseout', tip.hide);
-        /*
-
-        var bars = svg.selectAll(".bar")
                 .data(testdata)
                 .enter().append('path:rect')
                 .attr("class", 'bar')
                 .attr('x', function (d, i) {
                     return (i*4);
                 })
-                .attr('y', chartHeight)
-                .attr("height", 0)
-                .transition()
-                .delay(function(d,i) { return i * 100;})
-                .attr('y', function(d,i) { return y(d);})
-                .attr("height", function(d) { return chartHeight - y(d);})
+                .attr('y', function (d, i) {
+                    return y(d);
+                })
+                .attr("width", 4)
+                .attr('height', function (d, i) {
+                    return (height-y(d));
+                })
                 .on('mouseover', tip.show)
                 .on('mouseout', tip.hide);
+        /*
 
- */
+         var bars = svg.selectAll(".bar")
+         .data(testdata)
+         .enter().append('path:rect')
+         .attr("class", 'bar')
+         .attr('x', function (d, i) {
+         return (i*4);
+         })
+         .attr('y', chartHeight)
+         .attr("height", 0)
+         .transition()
+         .delay(function(d,i) { return i * 100;})
+         .attr('y', function(d,i) { return y(d);})
+         .attr("height", function(d) { return chartHeight - y(d);})
+         .on('mouseover', tip.show)
+         .on('mouseout', tip.hide);
+
+         */
 
 
         var xAxis = d3.svg.axis()
@@ -692,7 +681,7 @@ d3.select(self.frameElement).style("height", height + "px");
                 .attr('y', centroid[1]-35)
                 .attr("fill", 'white')
                 .text(function(d){if (medianIncome.length === 6){return 'Median County Income: $'+medianIncome.slice(0,3)+','+medianIncome.slice(3,medianIncome.length)}
-                    else return 'Median County Income: $'+medianIncome.slice(0,2)+','+medianIncome.slice(2, medianIncome.length)});
+                else return 'Median County Income: $'+medianIncome.slice(0,2)+','+medianIncome.slice(2, medianIncome.length)});
 
 
         g.append('rect')
@@ -722,15 +711,15 @@ d3.select(self.frameElement).style("height", height + "px");
 
 </script>
 
-    <div id="tooltip" class="hidden">
-        <p><span id="election-label"></span></p>
-    </div>
+<div id="tooltip" class="hidden">
+    <p><span id="election-label"></span></p>
+</div>
 
 <div id="chart"></div>
 
 
 
-    
+
 </body>
 
 </html>
