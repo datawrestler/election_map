@@ -11,147 +11,62 @@
 
 <script type="text/javascript">
 
-    function drawDonut(value1, value2) {
+    var width = 500,
+            height = 1000,
+            radius = Math.min(width, height) / 2;
 
 
 
-        var tmpdata = {
-            electionresults: [value1, value2]
-        };
+    var svg = d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-        var width = 460,
-                height = 300,
-                radius = Math.min(width, height) / 2;
 
-        var color = d3.scale.category20();
+    d3.csv('Data/CombinedData/SUPERCOMBINED2.csv', function(error, circleData){
+        if (error) {console.log(error);}
+        circleData.forEach(function (d, i) {
+            d['median_income'] = +d['median_income'];
+            d['percent_obama'] = +d['percent_obama'];
+            d['percent_romney'] = +d['percent_romney'];
+            console.log(i, d['percent_obama']);
+        });
 
-        var pie = d3.layout.pie()
-                .sort(null);
+        var circles = svg.selectAll('circle')
+                .data(circleData)
+                .enter().append('circle')
+                .attr("x", 0);
 
-        var arc = d3.svg.arc()
-                .innerRadius(radius - 100)
-                .outerRadius(radius - 50);
+        var obamaaverage = 48564;
+        var romneyaverage = 46505;
 
-        var svg = d3.select("body").append("svg")
-                .attr("width", width)
-                .attr("height", height)
-                .append("g")
-                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+        var scaleNum = d3.scale.linear()
+                .domain([0, 5000])
+                .range([0, 100]);
 
-        var path = svg.selectAll("path")
-                .data(pie(tmpdata.electionresults))
-                .enter().append("path")
-                .attr("fill", function (d, i) {
-                    return color(i);
+
+        var circleAttributes = circles
+                .attr("cx", function(d, i){return d.median_income/450-(scaleNum(i));})
+                .attr('cy', function(d,i) {
+                    if (d.percent_obama > 50) {return -d.percent_obama;}
+                    else {return -(1-d.percent_obama);}
                 })
-                .attr("d", arc);
-    }
 
-    drawDonut(65, 35);
 
-    function drawDonut(democratvalue, republicanvalue, centroid, countyname) {
-
-        var rectWidth = 80,
-                rectHeight = 80;
-
-        g.append('rect')
-                .attr("class", 'rectclicked')
-                .attr("width", rectWidth)
-                .attr("height", rectHeight)
-                .attr("x", centroid[0]+30)
-                .attr("y", centroid[1]-50);
-
-        var tmpdata = {
-            electionresults: [democratvalue, republicanvalue]
-        };
-
-        var width = 100,
-                height = 60,
-                radius = Math.min(width, height) / 2;
-
-        var partyColor = ['#0000FF', '#fc0606']; //republican color, democrat color
-
-        var pie = d3.layout.pie()
-                .sort(null);
-
-        var arc = d3.svg.arc()
-                .innerRadius(radius - 7)
-                .outerRadius(radius - 1);
-
-        var svg = d3.select("g").append("svg")
-                .attr("width", width)
-                .attr("height", height)
-                .attr("class", 'piechart')
-                .attr('x', centroid[0]+20)
-                .attr('y', centroid[1]-40)
-                .append("g")
-                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-        var path2 = svg.selectAll("path")
-                .data(pie(tmpdata.electionresults))
-                .enter().append("path")
-                .attr("class", "piechart")
-                .attr("fill", function (d, i) {
-                    return partyColor[i]})
-                .attr("d", arc)
-                .on('mouseover', function(d){
-                    $("#tooltip")
-                            .css('left', (d3.event.pageX) + 'px')
-                            .css('top', (d3.event.pageY - 90) + 'px')
-                            .css('position', 'fixed')
-                            .html(d.value + '%')
-                            .show();
-                })
-                .on('mouseout', function(d){
-                    $("#tooltip").html('').hide();
+                .attr('r', function(d) {return d.median_income/50000;})
+                .style('fill', function(d,i){
+                    if (d.percent_obama > 50) {return 'blue';}
+                    else {return 'red';}
                 });
 
-        // create legend data for donut chart democratic party
-        g.append('rect')
-                .attr('class', 'legend')
-                .attr('width', 5)
-                .attr('height', 5)
-                .attr('x', centroid[0]+55)
-                .attr('y', centroid[1]-20)
-                .attr('stroke', 'black')
-                .attr('fill', partyColor[0]);
 
-        g.append('text')
-                .attr('class', 'legend')
-                .attr('x', centroid[0] + 61)
-                .attr('y', centroid[1]-16)
-                .text('Obama');
 
-        // create legend data for donut chart republican party
-        g.append('rect')
-                .attr('class', 'legend')
-                .attr('width', 5)
-                .attr('height', 5)
-                .attr('x', centroid[0] + 55)
-                .attr('y', centroid[1]-8)
-                .attr('stroke', 'black')
-                .attr('fill', partyColor[1]);
-
-        g.append('text')
-                .attr('class', 'legend')
-                .attr('x', centroid[0] + 61)
-                .attr('y', centroid[1]-4)
-                .text('Romney');
-
-        g.append('text')
-                .attr('class', 'legendtitle')
-                .attr('x', centroid[0]+(50-((countyname.length+7)/2)))
-                .attr('y', centroid[1]-42)
-                .text(countyname+" County");
-
-        console.log(countyname.length);
+    });
 
 
 
 
-
-
-    }
 </script>
 
 

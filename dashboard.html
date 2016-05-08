@@ -189,9 +189,9 @@
         }
 
         .subtitle {
-            font-size: 4px;
-            font-family: "Times New Roman";
-            font-color: white;
+            font-size: 12px;
+            font-family: "Courier";
+            font-color: black;
         }
 
         .buttontext {
@@ -333,12 +333,15 @@
             .attr('stroke', 'black')
             .attr('fill', 'white');
 
+    // legend text
     svg.append("text")
             .attr("font-size", '10px')
             .attr('font-family', 'Courier')
             .attr('x', 857)
             .attr('y', 290)
             .text('Legend');
+
+
 
 
     // draw legend information
@@ -404,6 +407,14 @@
             .attr("opacity", '.8')
             .attr('class', 'dashboard');
 
+    // dashboard main text
+    svg.append('text')
+            .attr('font-size', '20px')
+            .attr('font-family', 'Courier')
+            .attr('x', 1020)
+            .attr('y', 50)
+            .text("Income Dashboard");
+
 
     function zoomed() {
         projection
@@ -439,7 +450,7 @@
 
         var electiondata2 = [testdata[0]['percent_obama'], testdata[0]['percent_romney']];
 
-        var circledata = [nationalMaxMedian, medianIncome, nationalMinMedian];
+        var circledata2 = [nationalMaxMedian, medianIncome, nationalMinMedian];
         var countycircles = ['National Max. Median Income: ', countyName + ' Median Income: ', 'National Min. Median Income: '];
 
         try {
@@ -462,7 +473,8 @@
             y = centroid[1];
             k = 4;
             drawCountyBars(barData);
-            drawMedianCircles(circledata, countycircles);
+            drawMedianCircles(circledata2, countycircles);
+            drawDashboardText(countyName);
 
             centered = d;
         } else {
@@ -627,42 +639,18 @@
                 ;
     }
 
-    function drawPiechart(electiondata2) {
 
-        var radius = Math.min(300, 500) / 2;
-
-        var color = ['red', 'blue'];
-
-        var pie = d3.layout.pie()
-                .sort(null);
-
-        var arc = d3.svg.arc()
-                .innerRadius(radius - 100)
-                .outerRadius(0);
-
-        var g2 = svg.selectAll('.arc')
-                .data(pie(electiondata2))
-                .enter().append('g')
-                .attr("class", 'arc');
-
-        g2.append('path')
-                .attr('d', arc)
-                .attr("class", 'piechart2')
-                .attr("transform", "translate(" + 1185 + ',' + 220 + ")")
-                .style('fill', function(d,i){return color[i];});
-
-
-
-    }
 
     function drawMedianCircles(circledata, circlelabels){
+        // drawMedianCircles redraws the county based median income information and removes previously drawn
+        // median income data
 
         svg.selectAll(['circle.medianincome']).remove();
 
 
 
 
-    var incometip = d3.tip()
+        var incometip = d3.tip()
             .attr("class", 'd3-tip')
             .offset([-10, 0])
             .html(function (d, i) {
@@ -673,23 +661,23 @@
 
        // return "<strong>% Returns </strong><span style='color:white'>"+nationalIncomeAverageLabels[i]+"</span><span style='color:white'>:</span> <span style='color:springgreen'>" + d3.format('.2g')(countydata[i]) + "</span>";
 
-    svg.call(incometip);
+        svg.call(incometip);
 
-    svg.selectAll('circle')
-            .data(initialcircles)
-            .enter().append('circle')
-            .style("stroke", 'black')
-            .attr("class", 'medianincome')
-            .attr('cx', 1110)
-            .attr('cy', function(d,i) { return 250+(scalemedian(circledata[1])-scalemedian(d));})
-            .attr('fill', function(d,i) { return colors[i];})
-            .attr('r', 0)
-            .on('mouseover', incometip.show)
-            .on('mouseout', incometip.hide)
-            .transition()
-            .delay(function(d,i){return i*300;})
-            .attr('r', function(d,i) { return scalemedian(d);})
-            .attr('opacity', '0.7');
+        svg.selectAll('circle')
+                .data(initialcircles)
+                .enter().append('circle')
+                .style("stroke", 'black')
+                .attr("class", 'medianincome')
+                .attr('cx', 1110)
+                .attr('cy', function(d,i) { return 350+(scalemedian(circledata[1])-scalemedian(d)/2);})
+                .attr('fill', function(d,i) { return colors[i];})
+                .attr('r', 0)
+                .on('mouseover', incometip.show)
+                .on('mouseout', incometip.hide)
+                .transition()
+                .delay(function(d,i){return i*300;})
+                .attr('r', function(d,i) { return scalemedian(d)/2;})
+                .attr('opacity', '0.7');
 
     }
 
@@ -699,11 +687,68 @@
     drawMedianCircles(initialcircles, initialcirclelabels);
 
 
+    function drawDashboardText(textstring){
+
+        svg.selectAll('text.subtitle').remove();
+
+        svg.append('text')
+                .attr('class', 'subtitle')
+                .attr('x', 1060)
+                .attr('y', 90)
+                .attr('font-size', '14px')
+                .attr('font-family', 'Courier')
+                .text(textstring);
+    }
 
 
 
 
-    //drawPiechart(nationalPopularVote);
+drawDashboardText('Fairfax Cty.');
+
+    d3.csv('Data/CombinedData/SUPERCOMBINED2.csv', function(error, circleData){
+        if (error) {console.log(error);}
+        circleData.forEach(function (d, i) {
+            d['median_income'] = +d['median_income'];
+            d['percent_obama'] = +d['percent_obama'];
+            d['percent_romney'] = +d['percent_romney'];
+            console.log(i, d['percent_obama']);
+        });
+
+        var circles = svg.selectAll('circle')
+                .data(circleData)
+                .enter().append('circle')
+                .attr("x", 1050);
+
+        var obamaaverage = 48564;
+        var romneyaverage = 46505;
+
+        var scaleNum = d3.scale.linear()
+                .domain([0, 5000])
+                .range([0, 100]);
+
+
+        var circleAttributes = circles
+                .attr("cx", function(d, i){return 1000+d.median_income/450-(scaleNum(i));})
+                .attr('cy', function(d,i) {
+                    if (d.percent_obama > 50) {return 25-(-d.percent_obama);}
+                    else {return -(25+(1-d.percent_obama));}
+                })
+
+
+                .attr('r', function(d) {return d.median_income/50000;})
+                .style('fill', function(d,i){
+                    if (d.percent_obama > 50) {return 'blue';}
+                    else {return 'red';}
+                });
+
+
+
+    });
+
+
+
+
+
 
 
 
