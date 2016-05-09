@@ -9,6 +9,7 @@
     <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="//d3js.org/queue.v1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
     <style>
 
         body, html {
@@ -22,17 +23,6 @@
             background: #fcfcfc;
         }
 
-
-        .button {
-            background-color: #4CAF50; /* Green */
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-        }
 
         .medianincome:hover {
             fill: orange;
@@ -62,7 +52,7 @@
 
         .bar {
             fill: steelblue;
-            stroke: white;
+            stroke: black;
             stroke-width: .1px;
         }
 
@@ -70,6 +60,10 @@
             fill: orange;
             stroke: white;
             stroke-width: .1px;
+        }
+
+        .bar2:hover {
+            fill: springgreen;
         }
 
         .bar:hover {
@@ -199,7 +193,7 @@
 
         .subtitle {
             font-size: 12px;
-            font-family: "Courier";
+            font-family: "Trebuchet MS";
             font-color: black;
         }
 
@@ -224,7 +218,18 @@
 
         .charttext {
             font-size: 16px;
-            font-family: Courier;
+            font-family: "Trebuchet MS";
+        }
+
+        h1 {
+            font-size: 28px;
+            font-family: 'Trebuchet MS';
+
+            top: 0px;
+            left: 345px;
+            width: 700px;
+            color: lightslategray;
+            position: relative;
         }
 
 
@@ -234,11 +239,19 @@
 
 <body>
 <div>
-    <h1>2012 Election Income vs. Voting Behavior</h1>
+    <h1>2012 Election: Income vs. Voting Behavior</h1>
 </div>
 
 
 <script type='text/javascript'>
+
+    var democratColors = ['rgb(222,235,247)', 'rgb(222,235,247)', 'rgb(198,219,239)', 'rgb(158,202,225)',
+        'rgb(107,174,214)', 'rgb(66,146,198)', 'rgb(33,113,181)', 'rgb(8,81,156)', 'rgb(8,48,107)', 'rgb(8,48,107)', 'rgb(8,48,107)'];
+
+    var republicanColors = ['rgb(255,222,222)', 'rgb(255,222,222)', 'rgb(255,198,198)', 'rgb(255,171,171)',
+        'rgb(255,137,137)', 'rgb(255,102,102)', 'rgb(255,73,73)', 'rgb(255,46,46)', 'rgb(255,23,23)', 'rgb(255,0,0)', 'rgb(255,0,0)'];
+
+
 
 
     var incomeRating = d3.map();
@@ -304,10 +317,6 @@
 
 
     var colors = ['rgb(19,61,5)', 'rgb(70,145,45)', 'rgb(191,249,172)' ];
-
-    var scalemedian = d3.scale.linear()
-            .domain([nationalMinMedian, nationalMaxMedian])
-            .range([20, height/8]);
 
 
 
@@ -420,23 +429,17 @@
     // dashboard main text
     svg.append('text')
             .attr('font-size', '20px')
-            .attr('font-family', 'Courier')
+            .attr('font-family', 'Trebuchet MS')
             .attr('x', 1020)
-            .attr('y', 50)
+            .attr('y', 30)
             .text("Income Dashboard");
 
     // Draw median income circle text info
     svg.append('text')
             .attr('class', 'charttext')
-            .attr('x', 1030)
-            .attr('y', 160)
+            .attr('x', 1055)
+            .attr('y', 130)
             .text('Median Income');
-
-    svg.append('text')
-            .attr('class', 'charttext')
-            .attr('x', 1000)
-            .attr('y', 300)
-            .text('IRS Income Distribution');
 
 
     function zoomed() {
@@ -464,8 +467,17 @@
 
         //capture the values for the county data from the income spreadsheet
 
-        var barData = [incomedata2[0]['under1']/incomedata2[0]['total'], incomedata2[0]['under10k']/incomedata2[0]['total'], incomedata2[0]['under25k']/incomedata2[0]['total'], incomedata2[0]['under50k']/incomedata2[0]['total'],
-            incomedata2[0]['under75k']/incomedata2[0]['total'], incomedata2[0]['under100k']/incomedata2[0]['total'], incomedata2[0]['under200k']/incomedata2[0]['total'], incomedata2[0]['over200k']/incomedata2[0]['total']];
+        if (incomedata2[0]['under1'] > 0) {
+             barData = [parseFloat(incomedata2[0]['under1'] / incomedata2[0]['total']).toPrecision(12), incomedata2[0]['under10k'] / incomedata2[0]['total'], incomedata2[0]['under25k'] / incomedata2[0]['total'], incomedata2[0]['under50k'] / incomedata2[0]['total'],
+                incomedata2[0]['under75k'] / incomedata2[0]['total'], incomedata2[0]['under100k'] / incomedata2[0]['total'], incomedata2[0]['under200k'] / incomedata2[0]['total'], incomedata2[0]['over200k'] / incomedata2[0]['total']];
+            console.log(barData);
+        }
+
+        else {
+             barData = [1, incomedata2[0]['under10k'] / incomedata2[0]['total'], incomedata2[0]['under25k'] / incomedata2[0]['total'], incomedata2[0]['under50k'] / incomedata2[0]['total'],
+                incomedata2[0]['under75k'] / incomedata2[0]['total'], incomedata2[0]['under100k'] / incomedata2[0]['total'], incomedata2[0]['under200k'] / incomedata2[0]['total'], incomedata2[0]['over200k'] / incomedata2[0]['total']];
+            console.log(barData);
+        }
 
         var countyName = incomedata2[0]['county_name'];
 
@@ -499,7 +511,7 @@
             x = centroid[0];
             y = centroid[1];
             k = 4;
-            drawCountyBars(barData);
+            drawCountyBars(barData, testdata[0]['percent_obama']);
 
             drawDashboardText(countyName);
 
@@ -590,8 +602,8 @@
     svg.call(nationalbartip);
 
     var y = d3.scale.linear()
-            .domain([0, 0.7])//d3.max(testdata)])
-            .range([100, 300]);
+            .domain([0, 1])//d3.max(testdata)])
+            .range([30, 300]);
 
 
     var bars = svg.selectAll(".bar")
@@ -599,14 +611,16 @@
             .enter().append('path:rect')
             .attr("class", 'bar')
             .attr('x', function (d, i) {
-                return (1035+(i*20));
+                return (961+(i*37));
             })
             .attr('y', function (d, i) {
                 return 300+(barheight - (y(d)));
             })
-            .attr("width", 10)
+            .attr("width", 18)
             .attr("height", 0)
-            .attr('fill', 'orange')
+            .style('opacity', '0.6')
+            .style('stroke', 'black')
+            .style('stoke-width', '0.5px')
             .on("mouseover", nationalbartip.show)
             .on('mouseout', nationalbartip.hide)
             .transition()
@@ -617,11 +631,49 @@
                 return (y(d));
             });
 
+    // draw income bar legend
+    svg.append("rect")
+            .attr('width', 8)
+            .attr('height', 8)
+            .attr('x', 970)
+            .attr('y', 343)
+            .attr("fill", 'steelblue')
+            .attr("opacity", '.8');
+
+    // draw income bar legend text part 1
+    svg.append("text")
+            .attr('x', 980)
+            .attr('y', 350)
+            .attr('font-family', 'Trebuchet MS')
+            .attr('font-size', '8px')
+            .text("Natn'l Income Returns");
+
+    // draw income bar legend part 2
+    svg.append("rect")
+            .attr('width', 8)
+            .attr('height', 8)
+            .attr('x', 970)
+            .attr('y', 355)
+            .attr("fill", 'purple')
+            .attr("opacity", '.8');
+
+    // draw income bar legend text part 2
+    svg.append("text")
+            .attr('x', 980)
+            .attr('y', 362)
+            .attr('font-family', 'Trebuchet MS')
+            .attr('font-size', '8px')
+            .text("County Income Returns");
 
 
 
 
-    function drawCountyBars(countydata) {
+
+
+
+
+
+    function drawCountyBars(countydata, obamaPercent) {
         // drawCountyBars takes in the paths IRS income data and draws bar chart next to the national averages
         // countydata is an array of county data
 
@@ -642,21 +694,29 @@
 
         svg.call(countybartip);
 
+
         var bars2 = svg.selectAll(".bar2")
                 .data(countydata)
                 .enter().append('path:rect')
                 .attr("class", 'bar2')
                 .attr('x', function (d, i) {
-                    return (1045 + (i * 20));
+                    return (979.5 + (i * 37));
                 })
                 .attr('y', function (d, i) {
                     return 300+(barheight - (y(d)));
                 })
-                .attr("width", 10)
+                .attr("width", 18)
                 .attr("height", 0)
                 .on("mouseover", countybartip.show)
                 .on("mouseout", countybartip.hide)
-                .attr('fill', 'orange')
+                //.style('fill', function(d,i){
+                 //   if (obamaPercent > 50) {return democratColors[Math.round((obamaPercent/10))];}
+                //    else {return republicanColors[Math.round(((100-obamaPercent)/10))];}
+                //})
+                .style('fill', 'purple')
+                .style('opacity', '0.6')
+                .style('stroke', 'black')
+                .style("stroke-width", 0.2)
                 .transition()
                 .delay(function (d, i) {
                     return i * 100;
@@ -669,6 +729,14 @@
 
 
 
+    // draw separating line on dashboard
+    svg.append('line')
+            .attr('x1', 960)
+            .attr('y1', 90)
+            .attr('x2', 1259)
+            .attr('y2', 90)
+            .attr('stroke', 'gray')
+            .attr('stroke-width', '2px');
 
 
 
@@ -676,19 +744,22 @@
 
         svg.selectAll('text.subtitle').remove();
 
+
+
         svg.append('text')
                 .attr('class', 'subtitle')
-                .attr('x', 1060)
-                .attr('y', 90)
-                .attr('font-size', '14px')
-                .attr('font-family', 'Courier')
-                .text(textstring);
+                .attr('x', 1020)
+                .attr('y', 65)
+                .text("County: "+textstring);
+
+        // draw County name holding box
+
     }
 
 
 
 
-drawDashboardText('Fairfax Cty.');
+drawDashboardText('Nationwide');
 
     var targetwidth = 1000,
             targetheight = 400,
@@ -758,7 +829,7 @@ drawDashboardText('Fairfax Cty.');
 
             var scaleMedian = d3.scale.linear()
                     .domain([20000, 120000])
-                    .range([200, 800]);
+                    .range([20, 300]);
 
             var x = d3.scale.linear()
                     .range([0, targetwidth]);
@@ -845,9 +916,23 @@ drawDashboardText('Fairfax Cty.');
 
             var obamaText = target.append('text')
                     .attr('font-family', 'Courier')
-                    .attr('x', obamaX-(hboxWidth/2))
-                    .attr('y', -151-hboxHeight)
-                    .text('Median Income: ' + obamaAvg);
+                    .attr('x', 15+obamaX-(hboxWidth/2))
+                    .attr('y', -134-hboxHeight)
+                    .attr('font-size', '12px')
+                    .attr('fill', democratColors[4])
+                    .style('font-weight', 'bold')
+                    .text('$' + obamaaverage);
+
+            var romneyText = target.append('text')
+                    .attr('font-family', 'Courier')
+                    .attr('x', 15+romneyX-(hboxWidth/2))
+                    .attr('y', 65)
+                    .attr('font-size', '12px')
+                    .attr('fill', republicanColors[4])
+                    .style('font-weight', 'bold')
+                    .text('$' + romneyaverage);
+
+
 
 
         });
@@ -896,12 +981,18 @@ drawDashboardText('Fairfax Cty.');
                         return countyY;
                     }
                 })
-                .attr('r', countyR*10)
-                .style('fill', 'green')
+                .attr('r', countyR*5)
+                .style('fill', 'rgb(74,153,89)')
+                .attr("stroke", "black")
+                .attr('stroke-width', .5)
                 .attr("class", 'countycircle')
                 .on("mouseover", scattertip.show)
                 .on("mouseout", scattertip.hide);
     }
+
+    var scalemedian = d3.scale.linear()
+            .domain([30000, 130000])
+            .range([30, 90]);
 
 
     function drawMedianCircles(circledata, circlelabels){
@@ -933,14 +1024,14 @@ drawDashboardText('Fairfax Cty.');
                 .style("stroke", 'black')
                 .attr("class", 'medianincome')
                 .attr('cx', 1110)
-                .attr('cy', function(d,i) { return 250+(scalemedian(circledata[1])-scalemedian(d)/1.2);})
+                .attr('cy', function(d,i) { return 270+(scalemedian(circledata[1])-scalemedian(d));})
                 .attr('fill', function(d,i) { return colors[i];})
                 .attr('r', 0)
                 .on('mouseover', incometip.show)
                 .on('mouseout', incometip.hide)
                 .transition()
                 .delay(function(d,i){return i*300;})
-                .attr('r', function(d,i) { return scalemedian(d)/1.2;})
+                .attr('r', function(d,i) { return scalemedian(d);})
                 .attr('opacity', '0.7');
 
     }
@@ -949,6 +1040,10 @@ drawDashboardText('Fairfax Cty.');
     var initialcirclelabels = ['National Max. Median Income: ', 'National Avg. Median Income: ', 'National Min. Median Income: '];
 
     drawMedianCircles(initialcircles, initialcirclelabels);
+
+    // draw Median Circle Text
+
+
 
 
 
