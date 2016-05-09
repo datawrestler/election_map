@@ -5,64 +5,237 @@
     <title>Title</title>
     <script src="//d3js.org/d3.v3.min.js"></script>
     <script src="//d3js.org/topojson.v1.min.js"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
     <script src="//d3js.org/queue.v1.min.js"></script>
+    <style>
+        .d3-tip {
+            line-height: 1;
+            font-weight: bold;
+            padding: 6px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            border-radius: 2px;
+        }
+
+        /* Creates a small triangle extender for the tooltip */
+        .d3-tip:after {
+            box-sizing: border-box;
+            display: inline;
+            font-size: 6px;
+            width: 100%;
+            line-height: 1;
+            color: rgba(0, 0, 0, 0.8);
+            content: "\25BC";
+            position: absolute;
+            text-align: center;
+        }
+
+        /* Style northward tooltips differently */
+        .d3-tip.n:after {
+            margin: -1px 0 0 0;
+            top: 100%;
+            left: 0;
+        }
+
+
+    </style>
 </head>
 <body>
 
 <script type="text/javascript">
 
-    var width = 500,
-            height = 1000,
-            radius = Math.min(width, height) / 2;
+    var targetwidth = 1000,
+            targetheight = 400,
+            targetradius = Math.min(targetwidth, targetheight) / 2;
 
 
 
-    var svg = d3.select("body").append("svg")
-            .attr("width", width)
-            .attr("height", height)
+    var target = d3.select("body").append("svg")
+            .attr("width", targetwidth)
+            .attr("height", targetheight)
             .append("g")
-            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+            .attr("transform", "translate(" + targetwidth / 2 + "," + targetheight / 2 + ")");
 
 
-    d3.csv('Data/CombinedData/SUPERCOMBINED2.csv', function(error, circleData){
-        if (error) {console.log(error);}
-        circleData.forEach(function (d, i) {
-            d['median_income'] = +d['median_income'];
-            d['percent_obama'] = +d['percent_obama'];
-            d['percent_romney'] = +d['percent_romney'];
-            console.log(i, d['percent_obama']);
+
+    function drawallmedian(){
+
+        var obamaAvg = 48564;
+        var romneyAvg = 46505;
+
+
+        var democratColors = ['rgb(222,235,247)', 'rgb(222,235,247)', 'rgb(198,219,239)', 'rgb(158,202,225)',
+        'rgb(107,174,214)', 'rgb(66,146,198)', 'rgb(33,113,181)', 'rgb(8,81,156)', 'rgb(8,48,107)', 'rgb(8,48,107)', 'rgb(8,48,107)'];
+
+        var republicanColors = ['rgb(255,222,222)', 'rgb(255,222,222)', 'rgb(255,198,198)', 'rgb(255,171,171)',
+        'rgb(255,137,137)', 'rgb(255,102,102)', 'rgb(255,73,73)', 'rgb(255,46,46)', 'rgb(255,23,23)', 'rgb(255,0,0)', 'rgb(255,0,0)'];
+
+
+
+
+        d3.csv('Data/CombinedData/SUPERCOMBINED2.csv', function(error, circleData){
+            if (error) {console.log(error);}
+            circleData.forEach(function (d, i) {
+                d['median_income'] = +d['median_income'];
+                d['percent_obama'] = +d['percent_obama'];
+                d['percent_romney'] = +d['percent_romney'];
+            });
+
+            var circles2 = target.selectAll('circle.allmedian')
+                    .data(circleData)
+                    .enter().append('circle')
+                    .attr("x", 0)
+                    .attr('class', 'allmedian');
+
+
+
+
+            var obamaaverage = 48564;
+            var romneyaverage = 46505;
+
+            var scaleNum = d3.scale.linear()
+                    .domain([0, 5000])
+                    .range([0, 100]);
+
+            var scaleMedian = d3.scale.linear()
+                    .domain([20000, 120000])
+                    .range([200, 800]);
+
+            var x = d3.scale.linear()
+                    .range([0, targetwidth]);
+
+            var y = d3.scale.linear()
+                    .range([targetheight, 0]);
+
+            x.domain(d3.extent(circleData, function(d) { return d.median_income; })).nice();
+            y.domain(d3.extent(circleData, function(d) { return d.median_income; })).nice();
+
+
+            var circleAttributes = circles2
+                    .attr("cx", function(d, i){return -550+(d.median_income/225)*1.8;})
+                    .attr('cy', function(d,i) {
+                        if (d.percent_obama > 50) {return 50-d.percent_obama*2;}
+                        else {return 50-d.percent_obama*2;}
+                    })
+
+                    .attr("class", 'mediancircles')
+                    .attr('r', function(d) {return d.median_income/48000;})
+                    .style('fill', function(d,i){
+                        if (d.percent_obama > 50) {return democratColors[Math.round((d.percent_obama/10))];}
+                        else {return republicanColors[Math.round((d.percent_romney/10))];}
+                    });
+
+
+
+            //Drawing chart lines
+
+            var line1 = target.append('line')
+                    .attr('x1', -375)
+                    .attr('y1', -51)
+                    .attr('x2', 450)
+                    .attr('y2', -51)
+                    .attr('stroke', 'black');
+/*
+            var box = target.append("rect")
+                    .attr('fill', 'none')
+                    .attr("width", 850)
+                    .attr('height', 250)
+                    .attr("x", -375)
+                    .attr("y", -150)
+                    .attr('stroke', 'black');
+*/
+
+            var obamaX = -550+(obamaAvg/225)*1.8;
+            var romneyX = -550+(romneyAvg/225)*1.8;
+
+            var obamaLine = target.append('line')
+                    .attr('x1', obamaX)
+                    .attr('y1', -51)
+                    .attr('x2', obamaX)
+                    .attr('y2', -151)
+                    .attr('stroke', democratColors[4]);
+
+            var romneyLine = target.append('line')
+                    .attr('x1', romneyX)
+                    .attr('y1', -51)
+                    .attr('x2', romneyX)
+                    .attr('y2', 49)
+                    .attr('stroke', republicanColors[4]);
+
+            var hboxWidth = 75;
+            var hboxHeight = 25;
+
+            var obamaBox = target.append('rect')
+                    .attr('fill', 'none')
+                    .attr('width', hboxWidth)
+                    .attr('height', hboxHeight)
+                    .attr('x', obamaX-(hboxWidth/2))
+                    .attr('y', -151-hboxHeight)
+                    .attr('stroke', democratColors[4]);
+
+            var romneyBox = target.append('rect')
+                    .attr('fill', 'none')
+                    .attr('width', hboxWidth)
+                    .attr('height', hboxHeight)
+                    .attr('x', romneyX-(hboxWidth/2))
+                    .attr('y', 49)
+                    .attr('stroke', republicanColors[4]);
+
+
         });
 
-        var circles = svg.selectAll('circle')
-                .data(circleData)
-                .enter().append('circle')
-                .attr("x", 0);
-
-        var obamaaverage = 48564;
-        var romneyaverage = 46505;
-
-        var scaleNum = d3.scale.linear()
-                .domain([0, 5000])
-                .range([0, 100]);
+        console.log(Math.round(78/10));
 
 
-        var circleAttributes = circles
-                .attr("cx", function(d, i){return d.median_income/450-(scaleNum(i));})
-                .attr('cy', function(d,i) {
-                    if (d.percent_obama > 50) {return -d.percent_obama;}
-                    else {return -(1-d.percent_obama);}
-                })
+    }
+
+drawallmedian();
+
+    function appendMedian(countyData, countyName){
 
 
-                .attr('r', function(d) {return d.median_income/50000;})
-                .style('fill', function(d,i){
-                    if (d.percent_obama > 50) {return 'blue';}
-                    else {return 'red';}
+
+        var scattertip = d3.tip()
+                .attr("class", 'd3-tip')
+                .offset([-10, 0])
+                .html(function (d, i) {
+                    return "<strong>"+countyName+"</strong>"
                 });
 
 
 
-    });
+        target.call(scattertip);
+
+        var circles3 = target.selectAll('circle.countycircle')
+                .data(countyData)
+                .enter().append('circle')
+                .attr("x", 0)
+                .attr('class', 'countycircle');
+
+        var party = countyData[0];
+        var countyX = -550+(countyData[1]/225)*1.8;
+        var countyY = 50-party*2;
+        var countyR = countyData[1]/48000;
+
+
+        var circleAttributes2 = circles3
+                .attr("cx", countyX)
+                .attr('cy', function(d) {
+                    if (countyData[0] > 50) {
+                        return countyY;
+                    }
+                    else {
+                        return countyY;
+                    }
+                })
+                .attr('r', countyR*10)
+                .attr("class", 'countycircle')
+                .style('fill', 'green')
+                .on("mouseover", scattertip.show)
+                .on("mouseout", scattertip.hide);
+    }
+
+
 
 
 

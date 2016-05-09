@@ -4,6 +4,7 @@
     <list default="true" id="6d43c907-6f29-4ed9-80b8-a777871ec938" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dashboard.html" afterPath="$PROJECT_DIR$/dashboard.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/medianincomes.html" afterPath="$PROJECT_DIR$/medianincomes.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/piechart.html" afterPath="$PROJECT_DIR$/piechart.html" />
     </list>
     <ignored path="Visualization.iws" />
@@ -28,8 +29,8 @@
       <file leaf-file-name="piechart.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/piechart.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="64" selection-end-column="7" />
+            <state relative-caret-position="120">
+              <caret line="46" column="4" selection-start-line="46" selection-start-column="4" selection-end-line="235" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -38,26 +39,16 @@
       <file leaf-file-name="dashboard.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1069">
-              <caret line="671" column="99" selection-start-line="671" selection-start-column="99" selection-end-line="671" selection-end-column="99" />
+            <state relative-caret-position="156">
+              <caret line="586" column="252" selection-start-line="586" selection-start-column="252" selection-end-line="586" selection-end-column="252" />
               <folding>
-                <marker date="1462691412710" expanded="true" signature="17153:17164" placeholder="..." />
-                <marker date="1462691412710" expanded="true" signature="17220:17231" placeholder="..." />
-                <marker date="1462691412710" expanded="true" signature="17255:17272" placeholder="..." />
-                <marker date="1462691412710" expanded="true" signature="18914:18925" placeholder="..." />
-                <marker date="1462691412710" expanded="true" signature="18981:18992" placeholder="..." />
-                <marker date="1462691412710" expanded="true" signature="19016:19033" placeholder="..." />
+                <marker date="1462760546000" expanded="true" signature="17887:17898" placeholder="..." />
+                <marker date="1462760546000" expanded="true" signature="17954:17965" placeholder="..." />
+                <marker date="1462760546000" expanded="true" signature="17989:18006" placeholder="..." />
+                <marker date="1462760546000" expanded="true" signature="19664:19675" placeholder="..." />
+                <marker date="1462760546000" expanded="true" signature="19731:19742" placeholder="..." />
+                <marker date="1462760546000" expanded="true" signature="19766:19783" placeholder="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="medianincomes.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/medianincomes.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="40" column="8" selection-start-line="40" selection-start-column="8" selection-end-line="42" selection-end-column="9" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -65,11 +56,9 @@
       <file leaf-file-name="index2.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11169">
+            <state relative-caret-position="12390">
               <caret line="826" column="7" selection-start-line="826" selection-start-column="7" selection-end-line="826" selection-end-column="7" />
-              <folding>
-                <marker date="1462684522766" expanded="true" signature="545:822" placeholder="{...}" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -77,7 +66,7 @@
       <file leaf-file-name="barchart.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/barchart.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1377">
+            <state relative-caret-position="1215">
               <caret line="81" column="104" selection-start-line="81" selection-start-column="104" selection-end-line="81" selection-end-column="136" />
               <folding />
             </state>
@@ -100,9 +89,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/barchart.html" />
-        <option value="$PROJECT_DIR$/medianincomes.html" />
         <option value="$PROJECT_DIR$/copyofindex.html" />
         <option value="$PROJECT_DIR$/index2.html" />
+        <option value="$PROJECT_DIR$/medianincomes.html" />
         <option value="$PROJECT_DIR$/piechart.html" />
         <option value="$PROJECT_DIR$/dashboard.html" />
       </list>
@@ -114,10 +103,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1088" />
-    <option name="y" value="-8" />
-    <option name="width" value="1096" />
-    <option name="height" value="1896" />
+    <option name="x" value="-206" />
+    <option name="y" value="23" />
+    <option name="width" value="1064" />
+    <option name="height" value="797" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -149,49 +138,17 @@
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="election_map" />
+              <option name="myItemId" value="Election_Visual" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="election_map" />
+              <option name="myItemId" value="Election_Visual" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="election_map" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="election_map" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="election_map" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="election_map" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="election_map" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CombinedData" />
+              <option name="myItemId" value="Election_Visual" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -289,17 +246,18 @@
       <workItem from="1462564328756" duration="6687000" />
       <workItem from="1462588920350" duration="16895000" />
       <workItem from="1462684596151" duration="6795000" />
+      <workItem from="1462727052036" duration="9182000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="83335000" />
+    <option name="totallyTimeSpent" value="92517000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1088" y="-8" width="1096" height="1896" extended-state="6" />
+    <frame x="-206" y="23" width="1064" height="797" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.175" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23684211" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -354,9 +312,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="675">
           <caret line="45" column="8" selection-start-line="45" selection-start-column="8" selection-end-line="47" selection-end-column="9" />
-          <folding>
-            <marker date="1462684522766" expanded="true" signature="545:822" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -387,9 +343,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1462684522766" expanded="true" signature="545:822" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -420,9 +374,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1462684522766" expanded="true" signature="545:822" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -453,9 +405,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4125">
           <caret line="275" column="12" selection-start-line="275" selection-start-column="12" selection-end-line="278" selection-end-column="15" />
-          <folding>
-            <marker date="1462684522766" expanded="true" signature="545:822" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -493,9 +443,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4675">
           <caret line="275" column="12" selection-start-line="275" selection-start-column="12" selection-end-line="278" selection-end-column="15" />
-          <folding>
-            <marker date="1462684522766" expanded="true" signature="545:822" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -533,9 +481,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4125">
           <caret line="275" column="12" selection-start-line="275" selection-start-column="12" selection-end-line="278" selection-end-column="15" />
-          <folding>
-            <marker date="1462684522766" expanded="true" signature="545:822" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -558,9 +504,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1462684522766" expanded="true" signature="545:822" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -583,9 +527,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1462684522766" expanded="true" signature="545:822" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -608,9 +550,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1462684522766" expanded="true" signature="545:822" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -626,9 +566,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1462684522766" expanded="true" signature="545:822" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -644,9 +582,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1462684522766" expanded="true" signature="545:822" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -662,9 +598,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1462684522766" expanded="true" signature="545:822" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -691,14 +625,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/medianincomes.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="40" column="8" selection-start-line="40" selection-start-column="8" selection-end-line="42" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/copyofindex.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4726">
@@ -709,7 +635,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/barchart.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1377">
+        <state relative-caret-position="1215">
           <caret line="81" column="104" selection-start-line="81" selection-start-column="104" selection-end-line="81" selection-end-column="136" />
           <folding />
         </state>
@@ -717,11 +643,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11169">
+        <state relative-caret-position="12390">
           <caret line="826" column="7" selection-start-line="826" selection-start-column="7" selection-end-line="826" selection-end-column="7" />
-          <folding>
-            <marker date="1462684522766" expanded="true" signature="545:822" placeholder="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -729,29 +653,38 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/medianincomes.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="481">
+          <caret line="115" column="4" selection-start-line="115" selection-start-column="4" selection-end-line="115" selection-end-column="4" />
+          <folding>
+            <marker date="1462757787000" expanded="true" signature="2058:2069" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/piechart.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="64" selection-end-column="7" />
+        <state relative-caret-position="120">
+          <caret line="46" column="4" selection-start-line="46" selection-start-column="4" selection-end-line="235" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1069">
-          <caret line="671" column="99" selection-start-line="671" selection-start-column="99" selection-end-line="671" selection-end-column="99" />
+        <state relative-caret-position="156">
+          <caret line="586" column="252" selection-start-line="586" selection-start-column="252" selection-end-line="586" selection-end-column="252" />
           <folding>
-            <marker date="1462691412710" expanded="true" signature="17153:17164" placeholder="..." />
-            <marker date="1462691412710" expanded="true" signature="17220:17231" placeholder="..." />
-            <marker date="1462691412710" expanded="true" signature="17255:17272" placeholder="..." />
-            <marker date="1462691412710" expanded="true" signature="18914:18925" placeholder="..." />
-            <marker date="1462691412710" expanded="true" signature="18981:18992" placeholder="..." />
-            <marker date="1462691412710" expanded="true" signature="19016:19033" placeholder="..." />
+            <marker date="1462760546000" expanded="true" signature="17887:17898" placeholder="..." />
+            <marker date="1462760546000" expanded="true" signature="17954:17965" placeholder="..." />
+            <marker date="1462760546000" expanded="true" signature="17989:18006" placeholder="..." />
+            <marker date="1462760546000" expanded="true" signature="19664:19675" placeholder="..." />
+            <marker date="1462760546000" expanded="true" signature="19731:19742" placeholder="..." />
+            <marker date="1462760546000" expanded="true" signature="19766:19783" placeholder="..." />
           </folding>
         </state>
       </provider>
