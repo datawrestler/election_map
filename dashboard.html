@@ -239,7 +239,7 @@
 
 <body>
 <div>
-    <h1>2012 Election: Income vs. Voting Behavior</h1>
+    <h1>2012 Election: Income and Voting Behavior</h1>
 </div>
 
 
@@ -467,18 +467,22 @@
 
         //capture the values for the county data from the income spreadsheet
 
-        if (incomedata2[0]['under1'] > 0) {
-             barData = [parseFloat(incomedata2[0]['under1'] / incomedata2[0]['total']).toPrecision(12), incomedata2[0]['under10k'] / incomedata2[0]['total'], incomedata2[0]['under25k'] / incomedata2[0]['total'], incomedata2[0]['under50k'] / incomedata2[0]['total'],
+        var barData = [incomedata2[0]['percent_under1'], incomedata2[0]['percent_under10k'], incomedata2[0]['percent_under25k'],
+        incomedata2[0]['percent_under50k'], incomedata2[0]['percent_under75k'], incomedata2[0]['percent_under100k'], incomedata2[0]['percent_under200k'],
+        incomedata2[0]['percent_over200k']];
+/*
+        if (incomedata2[0]['under1'] > 0) { //parseFloat(incomedata2[0]['under1'] / incomedata2[0]['total']).toPrecision(12),
+             barData = [ incomedata2[0]['under10k'] / incomedata2[0]['total'], incomedata2[0]['under25k'] / incomedata2[0]['total'], incomedata2[0]['under50k'] / incomedata2[0]['total'],
                 incomedata2[0]['under75k'] / incomedata2[0]['total'], incomedata2[0]['under100k'] / incomedata2[0]['total'], incomedata2[0]['under200k'] / incomedata2[0]['total'], incomedata2[0]['over200k'] / incomedata2[0]['total']];
             console.log(barData);
         }
 
-        else {
-             barData = [1, incomedata2[0]['under10k'] / incomedata2[0]['total'], incomedata2[0]['under25k'] / incomedata2[0]['total'], incomedata2[0]['under50k'] / incomedata2[0]['total'],
+        else { //1,
+             barData = [incomedata2[0]['under10k'] / incomedata2[0]['total'], incomedata2[0]['under25k'] / incomedata2[0]['total'], incomedata2[0]['under50k'] / incomedata2[0]['total'],
                 incomedata2[0]['under75k'] / incomedata2[0]['total'], incomedata2[0]['under100k'] / incomedata2[0]['total'], incomedata2[0]['under200k'] / incomedata2[0]['total'], incomedata2[0]['over200k'] / incomedata2[0]['total']];
             console.log(barData);
         }
-
+*/
         var countyName = incomedata2[0]['county_name'];
 
         var medianIncome = incomedata2[0]['median_income'];
@@ -554,7 +558,9 @@
     d3.csv("Data/IncomeData/COMBINED_2012.csv")
             .row(function(d) { return {key: d.county_id, median_income: d.median_income, total: d.total,
                 under1: d.under1, under10k: d.under10k, under25k: d.under25k, under50k: d.under50k,
-                under75k: d.under75k, under100k: d.under100k, under200k: d.under200k, over200k: d.over200k, county_name: d.state_county_name};})
+                under75k: d.under75k, under100k: d.under100k, under200k: d.under200k, over200k: d.over200k, county_name: d.state_county_name,
+            percent_under1: d.percent_under1, percent_under10k: d.percent_under10k, percent_under25k: d.percent_under25k, percent_under50k: d.percent_under50k,
+            percent_under75k: d.percent_under75k, percent_under100k: d.percent_under100k, percent_under200k: d.percent_under200k, percent_over200k: d.percent_over200k};})
             .get(function(error, rows){
                 //console.log(rows);
                 incomedata = rows;
@@ -603,7 +609,7 @@
 
     var y = d3.scale.linear()
             .domain([0, 1])//d3.max(testdata)])
-            .range([30, 300]);
+            .range([5, 400]);
 
 
     var bars = svg.selectAll(".bar")
@@ -862,6 +868,7 @@ drawDashboardText('Nationwide');
 
             //Drawing chart lines
 
+
             var line1 = target.append('line')
                     .attr('x1', -600)
                     .attr('y1', -51)
@@ -878,9 +885,21 @@ drawDashboardText('Nationwide');
              .attr('stroke', 'black');
              */
 
+            var obamaMax = 121200;
+            var romneyMax = 103300;
+            var obamaMin = 23360;
+            var romneyMin = 22150;
+
             var obamaX = -550+(obamaAvg/225)*1.8;
             var romneyX = -550+(romneyAvg/225)*1.8;
 
+            var obamaMinX = -550+(obamaMin/225)*1.8;
+            var romneyMinX = -550+(romneyMin/225)*1.8;
+
+            var obamaMaxX = -550+(obamaMax/225)*1.8;
+            var romneyMaxX = -550+(romneyMax/225)*1.8;
+
+            //draw avg line obama
             var obamaLine = target.append('line')
                     .attr('x1', obamaX)
                     .attr('y1', -51)
@@ -888,6 +907,23 @@ drawDashboardText('Nationwide');
                     .attr('y2', -151)
                     .attr('stroke', democratColors[4]);
 
+            //draw min line obama
+            var obamaLineMin = target.append('line')
+                    .attr('x1', obamaMinX)
+                    .attr('y1', -51)
+                    .attr('x2', obamaMinX)
+                    .attr('y2', -101)
+                    .attr('stroke', democratColors[4]);
+
+            //draw max line oabam
+            var obamaLineMax = target.append('line')
+                    .attr('x1', obamaMaxX)
+                    .attr('y1', -51)
+                    .attr('x2', obamaMaxX)
+                    .attr('y2', -121)
+                    .attr('stroke', democratColors[4]);
+
+            //draw average line Romney
             var romneyLine = target.append('line')
                     .attr('x1', romneyX)
                     .attr('y1', -51)
@@ -895,7 +931,45 @@ drawDashboardText('Nationwide');
                     .attr('y2', 49)
                     .attr('stroke', republicanColors[4]);
 
-            var hboxWidth = 75;
+            //draw min line Romney
+            var romneyLineMin = target.append('line')
+                    .attr('x1', romneyMinX)
+                    .attr('y1', -51)
+                    .attr('x2', romneyMinX)
+                    .attr('y2', -1)
+                    .attr('stroke', republicanColors[4]);
+            //draw romney max line
+            var romneyLineMax = target.append('line')
+                    .attr('x1', romneyMaxX)
+                    .attr('y1', -51)
+                    .attr('x2', romneyMaxX)
+                    .attr('y2', 24)
+                    .attr('stroke', republicanColors[4]);
+
+
+            // draw title line
+
+            var titleLine = target.append('line')
+                    .attr('x1', -500)
+                    .attr('y1', 80)
+                    .attr('x2', -265)
+                    .attr('y2', 80)
+                    .attr('stroke', 'black')
+                    .style('opacity', 0.7);
+
+            // draw title text
+            var titleText = target.append('text')
+                    .attr('font-family', 'Courier')
+                    .attr('x', -490)
+                    .attr('y', 78)
+                    .attr('font-size', '12px')
+                    .attr('fill', 'black')
+                    .style('font-weight', 'bold')
+                    .text('Voting Behavior & Median Income');
+
+
+
+            var hboxWidth = 50;
             var hboxHeight = 25;
 
             var obamaBox = target.append('rect')
@@ -906,6 +980,22 @@ drawDashboardText('Nationwide');
                     .attr('y', -151-hboxHeight)
                     .attr('stroke', democratColors[4]);
 
+            var obamaMinBox = target.append('rect')
+                    .attr('fill', 'none')
+                    .attr('width', hboxWidth)
+                    .attr('height', hboxHeight)
+                    .attr('x', obamaMinX-(hboxWidth/2))
+                    .attr('y', -101-hboxHeight)
+                    .attr('stroke', democratColors[4]);
+
+            var obamaMaxBox = target.append('rect')
+                    .attr('fill', 'none')
+                    .attr('width', hboxWidth)
+                    .attr('height', hboxHeight)
+                    .attr('x', obamaMaxX-(hboxWidth/2))
+                    .attr('y', -121-hboxHeight)
+                    .attr('stroke', democratColors[4]);
+
             var romneyBox = target.append('rect')
                     .attr('fill', 'none')
                     .attr('width', hboxWidth)
@@ -914,23 +1004,76 @@ drawDashboardText('Nationwide');
                     .attr('y', 49)
                     .attr('stroke', republicanColors[4]);
 
+            var romneyMinBox = target.append('rect')
+                    .attr('fill', 'none')
+                    .attr('width', hboxWidth)
+                    .attr('height', hboxHeight)
+                    .attr('x', romneyMinX-(hboxWidth/2))
+                    .attr('y', -1)
+                    .attr('stroke', republicanColors[4]);
+
+            var romneyMaxBox = target.append('rect')
+                    .attr('fill', 'none')
+                    .attr('width', hboxWidth)
+                    .attr('height', hboxHeight)
+                    .attr('x', romneyMaxX-(hboxWidth/2))
+                    .attr('y', 24)
+                    .attr('stroke', republicanColors[4]);
+
             var obamaText = target.append('text')
                     .attr('font-family', 'Courier')
-                    .attr('x', 15+obamaX-(hboxWidth/2))
+                    .attr('x', 13+obamaX-(hboxWidth/2))
                     .attr('y', -134-hboxHeight)
                     .attr('font-size', '12px')
                     .attr('fill', democratColors[4])
                     .style('font-weight', 'bold')
-                    .text('$' + obamaaverage);
+                    .text('$' + '49k');
+
+
+            var obamaMinText = target.append('text')
+                    .attr('font-family', 'Courier')
+                    .attr('x', 13+obamaMinX-(hboxWidth/2))
+                    .attr('y', -84-hboxHeight)
+                    .attr('font-size', '12px')
+                    .attr('fill', democratColors[4])
+                    .style('font-weight', 'bold')
+                    .text('$' + '23k');
+
+            var obamaMaxText = target.append('text')
+                    .attr('font-family', 'Courier')
+                    .attr('x', 9+obamaMaxX-(hboxWidth/2))
+                    .attr('y', -103-hboxHeight)
+                    .attr('font-size', '12px')
+                    .attr('fill', democratColors[4])
+                    .style('font-weight', 'bold')
+                    .text('$' + '121k');
 
             var romneyText = target.append('text')
                     .attr('font-family', 'Courier')
-                    .attr('x', 15+romneyX-(hboxWidth/2))
+                    .attr('x', 13+romneyX-(hboxWidth/2))
                     .attr('y', 65)
                     .attr('font-size', '12px')
                     .attr('fill', republicanColors[4])
                     .style('font-weight', 'bold')
-                    .text('$' + romneyaverage);
+                    .text('$' + '46k');
+
+            var romneyMinText = target.append('text')
+                    .attr('font-family', 'Courier')
+                    .attr('x', 13+romneyMinX-(hboxWidth/2))
+                    .attr('y', 17)
+                    .attr('font-size', '12px')
+                    .attr('fill', republicanColors[4])
+                    .style('font-weight', 'bold')
+                    .text('$' + '22k');
+
+            var romneyMaxText = target.append('text')
+                    .attr('font-family', 'Courier')
+                    .attr('x', 9+romneyMaxX-(hboxWidth/2))
+                    .attr('y', 40)
+                    .attr('font-size', '12px')
+                    .attr('fill', republicanColors[4])
+                    .style('font-weight', 'bold')
+                    .text('$' + '103k');
 
 
 
@@ -982,9 +1125,10 @@ drawDashboardText('Nationwide');
                     }
                 })
                 .attr('r', countyR*5)
-                .style('fill', 'rgb(74,153,89)')
+                .style('fill', 'purple')
                 .attr("stroke", "black")
                 .attr('stroke-width', .5)
+                .style('opacity', 0.8)
                 .attr("class", 'countycircle')
                 .on("mouseover", scattertip.show)
                 .on("mouseout", scattertip.hide);
